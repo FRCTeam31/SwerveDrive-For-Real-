@@ -23,6 +23,7 @@ import com.kauailabs.navx.frc.AHRS;
 import PursellJaques.FalconFXSwerveDrive;
 import PursellJaques.FalconFXSwerveModule;
 import PursellJaques.InterpolatingTreeMap;
+import PursellJaques.PixyVisionSystem;
 import PursellJaques.Turret;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -78,7 +79,10 @@ public class RobotContainer {
   public static Turret turret;
   public static InterpolatingTreeMap topMotorTreeMap;
   public static InterpolatingTreeMap bottomMotorTreeMap;
+  
+  // Vision Variables
   public static NetworkTable limelightTable;
+  public static PixyVisionSystem pixy;
 
   // Intake Variables
   public static WPI_TalonSRX intakeMotor;
@@ -150,14 +154,16 @@ public class RobotContainer {
 
     // Shooter
     turret = new Turret(Constants.TOP_SHOOTER_CAN_ID, Constants.BOTTOM_SHOOTER_CAN_ID, Constants.TURRET_ANGLE_MOTOR_CAN_ID, Constants.TURRET_MAX_ANGLE);
-
-    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
     bottomMotorTreeMap = new InterpolatingTreeMap(Constants.TREE_MAP_KEYS[0], Constants.BOTTOM_MOTOR_TREE_VALUES[0]);
     topMotorTreeMap = new InterpolatingTreeMap(Constants.TREE_MAP_KEYS[0], Constants.TOP_MOTOR_TREE_MAP_VALUES[0]);
     for (int i = 0; i < Constants.TOP_MOTOR_TREE_MAP_VALUES.length; i++) {
       bottomMotorTreeMap.put(Constants.TREE_MAP_KEYS[i], Constants.BOTTOM_MOTOR_TREE_VALUES[i]);
       topMotorTreeMap.put(Constants.TREE_MAP_KEYS[i], Constants.TOP_MOTOR_TREE_MAP_VALUES[i]);
     }
+
+    // Vision systems
+    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    pixy = new PixyVisionSystem();
 
     // Intake Motor
     intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR_CID);

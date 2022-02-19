@@ -116,10 +116,13 @@ public final class Constants {
     public static int BOTTOM_SHOOTER_CAN_ID = 14; // 15 or 14
     public static int TOP_SHOOTER_CAN_ID = 15;
     public static int TURRET_ANGLE_MOTOR_CAN_ID = 5;
-    public static final double TURRET_MAX_ANGLE = 0; // Maximum angle the turret can spin in degrees, 0 is directly forward
+    public static  double TURRET_MAX_ANGLE = 0; // Maximum angle the turret can spin in degrees, 0 is directly forward
     public static double SHOOTER_KP = 0.2;
     public static double SHOOTER_KI = 0.001;
     public static double SHOOTER_KD = 0; 
+    public static  double TURN_SHOOTER_MOTOR_KP = 0;
+    public static  double TURN_SHOOTER_MOTOR_KI = 0;
+    public static  double TURN_SHOOTER_MOTOR_KD = 0;
     public static double TURRET_ANGLE_MOTOR_KP = 1;
     public static double TURRET_ANGLE_MOTOR_KI = 1;
     public static double TURRET_ANGLE_MOTOR_KD = 1;
@@ -148,9 +151,22 @@ public final class Constants {
     public static  double DDC_KP = 1;
     public static  double DDC_KI = 0;
     public static  double DDC_KD = 0;
-    public static final int DDC_TOLERANCE = 0; // Tolerance as a percentage of the target distance
-    public static final double DDC_MAX_COUNT = 0; // Number of ticks the bot needs to be inside target 
-    public static final double TURN_SHOOTER_MOTOR_KP = 0;
-    public static final double TURN_SHOOTER_MOTOR_KI = 0;
-    public static final double TURN_SHOOTER_MOTOR_KD = 0;
+    public static  int DDC_TOLERANCE = 0; // Tolerance as a percentage of the target distance
+    public static  double DDC_MAX_COUNT = 0; // Number of ticks the bot needs to be inside target 
+    
+    // Track Ball With Pixy Command Constants
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 1;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 1;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_ANGLE_KD = 0;
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 0; // Acceptable angle
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 0; // Target distance measurement
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 0; // Acceptable distance tolerance as a percentage of the target distance measurement
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT = 0;
+
+
+
+    
 }
