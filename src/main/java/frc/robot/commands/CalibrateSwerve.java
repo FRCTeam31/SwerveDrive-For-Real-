@@ -27,6 +27,7 @@ public class CalibrateSwerve extends CommandBase {
     for (FalconFXSwerveModule module: RobotContainer.swerveDrive.swerveModules) {
       wheelAlignmentProperties.put(module.name, Double.toString(module.calculateAngleConstant()));
     }
+    wheelAlignmentProperties.put("TURRET", Double.toString(RobotContainer.turret.getZeroAngleConstant()));
 
     try {
       wheelAlignmentProperties.store(new FileOutputStream(Constants.WHEEL_ALIGNMENT_FILE_PATH), null);

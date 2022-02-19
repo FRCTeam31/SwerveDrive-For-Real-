@@ -71,7 +71,7 @@ public class RobotContainer {
 
   // Swerve Variables
   public static FalconFXSwerveModule frontLeft, frontRight, backLeft, backRight, testModule, testBackRight,
-      testFrontRight, testMiddleLeft;
+    testFrontRight, testMiddleLeft;
   public static FalconFXSwerveDrive swerveDrive;
   public static Properties wheelAlignmentConstants;
 
@@ -161,12 +161,12 @@ public class RobotContainer {
       topMotorTreeMap.put(Constants.TREE_MAP_KEYS[i], Constants.TOP_MOTOR_TREE_MAP_VALUES[i]);
     }
 
-    // Vision systems
-    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-    pixy = new PixyVisionSystem();
-
     // Intake Motor
     intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR_CID);
+
+    // Vision systems
+    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    //pixy = new PixyVisionSystem();
 
     // Limelight Controls
     if (DriverStation.isFMSAttached()) {
@@ -255,7 +255,7 @@ public class RobotContainer {
    */
   public static void cancelAllExcept(Command canceler) {
     int identity = commandList.indexOf(canceler);
-    
+
     for (int i = 0; i < commandList.size(); i++) {
       if (i != identity) {
         commandList.get(i).cancel();
