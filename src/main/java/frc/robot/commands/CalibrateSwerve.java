@@ -35,6 +35,7 @@ public class CalibrateSwerve extends CommandBase {
       System.out.println("Could not store properties");
     }
     System.out.println("CALIBRATED WHEEL CONSTANTS");
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

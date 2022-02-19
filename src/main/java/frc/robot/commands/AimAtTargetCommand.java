@@ -20,7 +20,6 @@ public class AimAtTargetCommand extends CommandBase {
   public AimAtTargetCommand(){
     // Use addRequirements() here to declare subsystem dependencies.
     ballCenterPID = new N_PID(Constants.GOAL_AIMING_KP, Constants.GOAL_AIMING_KI, Constants.GOAL_AIMING_KD);
-
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +28,8 @@ public class AimAtTargetCommand extends CommandBase {
     count = 0;
     ballCenterPID.reset(0);
     // Turn off driveCommand
-    RobotContainer.turnOffDriveCommands();
     SmartDashboard.putString("Aim At Target Command", "ACTIVE");
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

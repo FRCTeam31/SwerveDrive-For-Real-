@@ -48,7 +48,7 @@ public final class Constants {
     public static Vector FR_P = new Vector(1, 1);
     // Back Left
     public static int BL_DMCID = 7;
-    public static int BL_AMCID = 9;
+    public static int BL_AMCID = 10;
     public static int BL_EC = 1;
     public static Vector BL_P = new Vector(-1, -1);
     // Back Right

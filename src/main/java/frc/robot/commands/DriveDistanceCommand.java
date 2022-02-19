@@ -34,6 +34,7 @@ public class DriveDistanceCommand extends CommandBase {
     }
     distancePIDController.reset(0);
     counter = 0;
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

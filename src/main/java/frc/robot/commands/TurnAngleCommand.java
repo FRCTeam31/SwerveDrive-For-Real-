@@ -28,6 +28,7 @@ public class TurnAngleCommand extends CommandBase {
     targetAngle = RobotContainer.navX.getAngle() + inputAngle;
     anglePIDController.reset(0);
     counter = 0;
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

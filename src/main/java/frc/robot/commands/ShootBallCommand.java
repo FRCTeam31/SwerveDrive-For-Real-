@@ -30,7 +30,7 @@ public class ShootBallCommand extends CommandBase {
   public void initialize() {
     this.time = 0;
     // Turn off driveCommand
-    RobotContainer.turnOnDriveCommands();
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

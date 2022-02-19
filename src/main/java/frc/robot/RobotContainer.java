@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.util.Properties;
+import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -92,6 +93,7 @@ public class RobotContainer {
   public static ShootBallCommand shootBallCommand;
   public static TeleopBallIntakeCommand teleopBallIntakeCommand;
   public static CalibrateSwerve configureWheelAlignments;
+  public static ArrayList<Command> commandList;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
 
@@ -184,6 +186,13 @@ public class RobotContainer {
     shootBallCommand = new ShootBallCommand(1000);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
+    commandList = new ArrayList<Command>();
+    commandList.add(driveCommand);
+    commandList.add(trackBallCommand);
+    commandList.add(aimAtTargetCommand);
+    commandList.add(shootBallCommand);
+    commandList.add(teleopBallIntakeCommand);
+    commandList.add(configureWheelAlignments);
     // Test Commands
     // swerveModuleTestCommand = new SwerveModuleTestCommand(testModule);
 
@@ -233,5 +242,18 @@ public class RobotContainer {
    */
   public static void turnOnDriveCommands() {
     driveCommand.schedule();
+  }
+
+  /**
+   * Cancels all commands except the one passed as the parameter (assuming that all command are inside of commandList)
+   */
+  public static void cancelAllExcept(Command canceler) {
+    int identity = commandList.indexOf(canceler);
+    
+    for (int i = 0; i < commandList.size(); i++) {
+      if (i != identity) {
+        commandList.get(i).cancel();
+      }
+    }
   }
 }

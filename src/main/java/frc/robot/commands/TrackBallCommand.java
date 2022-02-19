@@ -33,7 +33,7 @@ public class TrackBallCommand extends CommandBase {
     // Reset check count
     checkCount = 0;
     // Turn off driveCommand
-    RobotContainer.turnOffDriveCommands();
+    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
