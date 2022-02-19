@@ -23,5 +23,6 @@ pluginManagement {
             name 'frcHome'
             url frcHomeMaven
         }
+        maven { url 'https://nexus.otake.pw/repository/maven-public/' }
     }
 }
