@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 public class BallSuckCommand extends CommandBase {
   // the times in nanoseconds to spin the intake motor and drive straight forward
   double suckDuration, driveDuration;
-  double startTime;
+  double startTime, timeElapsed;
 
   public BallSuckCommand(double suckDuration, double driveDuration) {
     this.suckDuration = suckDuration;
@@ -28,7 +28,10 @@ public class BallSuckCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.swerveDrive.drive(0, Constants.BALL_SUCK_SPEED, 0);
+    timeElapsed = (double)System.currentTimeMillis();
+    if (timeElapsed < driveDuration) {
+      RobotContainer.swerveDrive.drive(0, Constants.BALL_SUCK_SPEED, 0);
+    }
     RobotContainer.intakeMotor.set(ControlMode.Velocity, Constants.SAFE_INTAKE_SPEED * Constants.FALCON_MAX_SPEED);
   }
 
@@ -39,7 +42,6 @@ public class BallSuckCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double timeElapsed = (double)System.currentTimeMillis() - startTime;
-    return timeElapsed > suckDuration && timeElapsed > driveDuration;
+    return timeElapsed > suckDuration;
   }
 }
