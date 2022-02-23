@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.commands.AimAtTargetCommand;
+import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
@@ -95,10 +96,10 @@ public class RobotContainer {
   // Commands
   public static DriveCommand driveCommand;
   public static TrackBallCommand trackBallCommand;
-  public static AimAtTargetCommand aimAtTargetCommand;
   public static ShootBallCommand shootBallCommand;
   public static TeleopBallIntakeCommand teleopBallIntakeCommand;
   public static CalibrateSwerve configureWheelAlignments;
+  public static AimTurretTowardsTarget aimTurretTowardsTarget;
   public static ArrayList<Command> commandList;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
@@ -193,17 +194,18 @@ public class RobotContainer {
     // Commands
     driveCommand = new DriveCommand();
     trackBallCommand = new TrackBallCommand();
-    aimAtTargetCommand = new AimAtTargetCommand();
+    aimTurretTowardsTarget = new AimTurretTowardsTarget();
     shootBallCommand = new ShootBallCommand(1000);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
     commandList.add(trackBallCommand);
-    commandList.add(aimAtTargetCommand);
+    commandList.add(aimTurretTowardsTarget);
     commandList.add(shootBallCommand);
     commandList.add(teleopBallIntakeCommand);
     commandList.add(configureWheelAlignments);
+
     // Test Commands
     // swerveModuleTestCommand = new SwerveModuleTestCommand(testModule);
 
@@ -224,7 +226,7 @@ public class RobotContainer {
     button2.whenPressed(trackBallCommand);
     button3.whenPressed(teleopBallIntakeCommand);
     button5.whenPressed(configureWheelAlignments);
-    button4.whenPressed(aimAtTargetCommand);
+    button4.whenPressed(aimTurretTowardsTarget);
     
     // button4.whenPressed(shootBallCommand);
   }

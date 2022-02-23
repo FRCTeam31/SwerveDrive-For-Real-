@@ -24,23 +24,23 @@ public class Turret {
     public double turretZeroConstant; // The constant that tells the turret angle motor where 0 is
     public Turret(int topShooterMotorCanID, int bottomShooterMotorCanID, int turnShooterMotorCanID, double maxTurretAngle){
         // Bottom Shooter Motor
-        // bottomShooterMotor = new WPI_TalonFX(bottomShooterMotorCanID);
-        // TalonFXConfiguration bottomShooterMotorConfig = new TalonFXConfiguration();
-        // bottomShooterMotorConfig.slot0.kP = Constants.SHOOTER_KP;
-        // bottomShooterMotorConfig.slot0.kI = Constants.SHOOTER_KI;
-        // bottomShooterMotorConfig.slot0.kD = Constants.SHOOTER_KD;
-        // bottomShooterMotor.configAllSettings(bottomShooterMotorConfig);
-        // bottomShooterMotor.selectProfileSlot(0, 0);
-        // bottomShooterMotor.setNeutralMode(NeutralMode.Brake);
-        // // Top Shooter Motor
-        // topShooterMotor = new WPI_TalonFX(topShooterMotorCanID);
-        // TalonFXConfiguration topShooterMotorConfig = new TalonFXConfiguration();
-        // topShooterMotorConfig.slot0.kP = Constants.SHOOTER_KP;
-        // topShooterMotorConfig.slot0.kI = Constants.SHOOTER_KI;
-        // topShooterMotorConfig.slot0.kD = Constants.SHOOTER_KD;
-        // topShooterMotor.configAllSettings(topShooterMotorConfig);
-        // topShooterMotor.selectProfileSlot(0, 0);
-        // topShooterMotor.setNeutralMode(NeutralMode.Brake);
+        bottomShooterMotor = new WPI_TalonFX(bottomShooterMotorCanID);
+        TalonFXConfiguration bottomShooterMotorConfig = new TalonFXConfiguration();
+        bottomShooterMotorConfig.slot0.kP = Constants.SHOOTER_KP;
+        bottomShooterMotorConfig.slot0.kI = Constants.SHOOTER_KI;
+        bottomShooterMotorConfig.slot0.kD = Constants.SHOOTER_KD;
+        bottomShooterMotor.configAllSettings(bottomShooterMotorConfig);
+        bottomShooterMotor.selectProfileSlot(0, 0);
+        bottomShooterMotor.setNeutralMode(NeutralMode.Brake);
+        // Top Shooter Motor
+        topShooterMotor = new WPI_TalonFX(topShooterMotorCanID);
+        TalonFXConfiguration topShooterMotorConfig = new TalonFXConfiguration();
+        topShooterMotorConfig.slot0.kP = Constants.SHOOTER_KP;
+        topShooterMotorConfig.slot0.kI = Constants.SHOOTER_KI;
+        topShooterMotorConfig.slot0.kD = Constants.SHOOTER_KD;
+        topShooterMotor.configAllSettings(topShooterMotorConfig);
+        topShooterMotor.selectProfileSlot(0, 0);
+        topShooterMotor.setNeutralMode(NeutralMode.Brake);
         // turnShooterMotor
         turnShooterMotor = new WPI_TalonFX(turnShooterMotorCanID);
         TalonFXConfiguration turnShooterMotorConfig = new TalonFXConfiguration();
@@ -78,7 +78,7 @@ public class Turret {
      * Set the speeds of the shooting motors to specified values
      */
     public void setShooterSpeeds(double topMotorSpeed, double bottomMotorSpeed){
-        topShooterMotor.set(ControlMode.Velocity, topMotorSpeed);
+        topShooterMotor.set(ControlMode.Velocity, topMotorSpeed * -1);
         bottomShooterMotor.set(ControlMode.Velocity, bottomMotorSpeed);
     }
 

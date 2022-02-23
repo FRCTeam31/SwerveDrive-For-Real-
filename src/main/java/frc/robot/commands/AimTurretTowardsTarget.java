@@ -20,6 +20,7 @@ public class AimTurretTowardsTarget extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.cancelAllExcept(this);
+    System.out.println("AIM TURRET TOWARDS TARGET COMMAND ACTIVE");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,13 +36,15 @@ public class AimTurretTowardsTarget extends CommandBase {
       // If there is a target set the shooter to face the target
       RobotContainer.turret.setShooterRelativeAngle(RobotContainer.limelightTable.getEntry("tx").getDouble(0.0));
     }
-
+    System.out.println("tv: " + RobotContainer.limelightTable.getEntry("tx").getDouble(0.0));
+    System.out.print(", tx: " + RobotContainer.limelightTable.getEntry("tx").getDouble(0.0));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.turret.stopAngleMotor();
+    System.out.println("AIM TURRET TOWARDS TARGET COMMAND INACTIVE");
 
   }
 

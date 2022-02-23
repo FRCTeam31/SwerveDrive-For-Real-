@@ -19,6 +19,7 @@ public class AutonomousCommandGroup extends SequentialCommandGroup {
       new DriveDistanceCommand(Constants.DISTANCE_TO_FIRST_BALL_TICKS),
       new TrackBallWithPixyCommand(Constants.BALL_PROFILE),
       new BallSuckCommand(Constants.AUTO_BALL_INTAKE_SUCK_TIME, Constants.AUTO_BALL_INTAKE_DRIVE_TIME),
+      
       new AimTurretTowardsTarget(),
       new ShootBallCommand(Constants.AUTON_SHOOT_MAX_TIME)
     );
