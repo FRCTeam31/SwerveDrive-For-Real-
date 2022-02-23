@@ -93,12 +93,14 @@ public class Robot extends TimedRobot {
     // TESTING SHOOTER COMMAD
     // RobotContainer.bottomShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED) ;
     // RobotContainer.topShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick2.getRawAxis(3) * Constants.FALCON_MAX_SPEED) ;
-    RobotContainer.turret.displayMetricsToSmartDashboard();
-
-    RobotContainer.turret.setShooterAbsoluteAngle(RobotContainer.joystick2.getRawAxis(2) * 100);
-    SmartDashboard.putNumber("INPUT TURRET ANGLE", RobotContainer.joystick2.getRawAxis(2) * 100);
-    // RobotContainer.turret.turnShooterMotor.set(RobotContainer.joystick2.getRawAxis(2));
-    SmartDashboard.putNumber("FALCON TEMP", RobotContainer.turret.turnShooterMotor.getTemperature());
+    // RobotContainer.turret.displayMetricsToSmartDashboard();
+    // //RobotContainer.turret.setShooterAbsoluteAngle(RobotContainer.joystick2.getTwist() * 90);
+    // RobotContainer.turret.setCurrentShooterRelativeAngleWithDeadZone(RobotContainer.joystick2.getRawAxis(2) * 100, 10);
+    // SmartDashboard.putNumber("INPUT TURRET ANGLE", RobotContainer.joystick2.getRawAxis(2) * 100);
+    // // RobotContainer.turret.turnShooterMotor.set(RobotContainer.joystick2.getRawAxis(2));
+    // SmartDashboard.putNumber("FALCON TEMP", RobotContainer.turret.turnShooterMotor.getTemperature());
+    RobotContainer.pixy.displayBlock(RobotContainer.pixy.getBiggestBlock(Constants.BLUE_BALL_PIXY_PROFILE));
+  
   }
 
   @Override

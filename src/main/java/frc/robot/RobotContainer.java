@@ -42,6 +42,7 @@ import frc.robot.commands.TeleopBallIntakeCommand;
 import frc.robot.commands.TrackBallCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.SerialPort;
 
@@ -68,12 +69,13 @@ public class RobotContainer {
   public static JoystickButton button3;
   public static JoystickButton button4;
   public static JoystickButton button5;
+  public static JoystickButton button6;
 
   // Swerve Variables
   public static FalconFXSwerveModule frontLeft, frontRight, backLeft, backRight, testModule, testBackRight,
     testFrontRight, testMiddleLeft;
   public static FalconFXSwerveDrive swerveDrive;
-  public static Properties wheelAlignmentConstants;
+  public static Properties alignmentConstants;
 
   // Shooter Variables
   public static Turret turret;
@@ -112,10 +114,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Create swerve modules
+
     try {
-      wheelAlignmentConstants = new Properties();
-      wheelAlignmentConstants.load(new FileInputStream(Constants.WHEEL_ALIGNMENT_FILE_PATH));
-      System.out.println("LOADED WHEEL ALIGHN CONSTANTS");
+      alignmentConstants = new Properties();
+      alignmentConstants.load(new FileInputStream(Constants.ALIGNMENT_FILE_PATH));
+      System.out.println("LOADED ALIGN CONSTANTS");
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("\nHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh\n\nHHHHHHHHHHH\nHAttempting to calibrate swerve drive will result in a crash");
@@ -151,9 +154,11 @@ public class RobotContainer {
     button3 = new JoystickButton(joystick, 3);
     button4 = new JoystickButton(joystick, 4);
     button5 = new JoystickButton(joystick, 5);
+    button6 = new JoystickButton(joystick, 6);
 
     // Shooter
     turret = new Turret(Constants.TOP_SHOOTER_CAN_ID, Constants.BOTTOM_SHOOTER_CAN_ID, Constants.TURRET_ANGLE_MOTOR_CAN_ID, Constants.TURRET_MAX_ANGLE);
+    // turret.putAlignmentConstant(); uncomment when the turret needs to be reset to zero
     bottomMotorTreeMap = new InterpolatingTreeMap(Constants.TREE_MAP_KEYS[0], Constants.BOTTOM_MOTOR_TREE_VALUES[0]);
     topMotorTreeMap = new InterpolatingTreeMap(Constants.TREE_MAP_KEYS[0], Constants.TOP_MOTOR_TREE_MAP_VALUES[0]);
     for (int i = 0; i < Constants.TOP_MOTOR_TREE_MAP_VALUES.length; i++) {
@@ -166,7 +171,7 @@ public class RobotContainer {
 
     // Vision systems
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-    //pixy = new PixyVisionSystem();
+    pixy = new PixyVisionSystem();
 
     // Limelight Controls
     if (DriverStation.isFMSAttached()) {
@@ -215,11 +220,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    button1.whenPressed(driveCommand);
+    //button1.whenPressed(driveCommand);
     button2.whenPressed(trackBallCommand);
     button3.whenPressed(teleopBallIntakeCommand);
     button5.whenPressed(configureWheelAlignments);
     button4.whenPressed(aimAtTargetCommand);
+    
     // button4.whenPressed(shootBallCommand);
   }
 

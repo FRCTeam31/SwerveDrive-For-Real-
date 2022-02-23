@@ -4,6 +4,7 @@
 
 package frc.robot;
 import PursellJaques.Vector;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -28,7 +29,7 @@ public final class Constants {
     // HARDWARE CONSTANTS
     // ##############################################################
 
-    // Swerve Module Constants
+	// Swerve Module Constants
     // Angle PID
     public static double ANGLE_KP = 7;
     public static double ANGLE_KI = 1;
@@ -42,7 +43,7 @@ public final class Constants {
     public static double FALCON_KI = 0;
     public static double FALCON_KD = 0; 
     // The filepath on the RIO for the wheel alignment constants
-    public static String WHEEL_ALIGNMENT_FILE_PATH = "home/lvuser/WheelConstants";
+    public static String ALIGNMENT_FILE_PATH = "home/lvuser/WheelConstants";
     
     // Misc
     public static int MAX_RPM = 5000;
@@ -104,7 +105,7 @@ public final class Constants {
     public static  double TURN_SHOOTER_MOTOR_KD = 0.01;
     public static double TURRET_ANGLE_MOTOR_KP = 1;
     public static double TURRET_ANGLE_MOTOR_KI = 1;
-    public static double TURRET_ANGLE_MOTOR_KD = 1;
+    public static double TURRET_ANGLE_MOTOR_KD = 3;
     public static double[] TREE_MAP_KEYS =    {-17.0, 0};
     public static double[] TOP_MOTOR_TREE_MAP_VALUES = {0.0, 1};
     public static double[] BOTTOM_MOTOR_TREE_VALUES = {0.0, 1};
@@ -115,6 +116,8 @@ public final class Constants {
 
     // Vision Profile Constants
     public static int BALL_PROFILE;
+    public static int BLUE_BALL_PIXY_PROFILE = Pixy2CCC.CCC_SIG1;
+    public static int RED_BALL_PIXY_PROFILE = Pixy2CCC.CCC_SIG2;
     public static int RED_BALL_PROFILE = 3;
     public static int BLUE_BALL_PROFILE = 2;
     public static int GOAL_PROFILE = 1;
@@ -163,11 +166,12 @@ public final class Constants {
     public static double TTA_ERROR = 2; // Degrees of tolerance
     public static double TTA_MAX_COUNTER = 0; // Number of command loops the robot needs to be inside the tolerance
 
-    // Ball intake command constants
+    // Autonomous Command Group Constants
     public static double BALL_SUCK_SPEED = 0.3;
     public static double SAFE_INTAKE_SPEED = 0.3;
     public static double AUTO_BALL_INTAKE_DRIVE_TIME = 222;
     public static double AUTO_BALL_INTAKE_SUCK_TIME = 666;
+    public static int AUTON_SHOOT_MAX_TIME = 0;
 
     // Drive Distance Command Constants
     public static double DISTANCE_TO_FIRST_BALL_TICKS = 0;

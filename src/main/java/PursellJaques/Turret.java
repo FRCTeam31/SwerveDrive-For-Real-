@@ -22,7 +22,6 @@ public class Turret {
     public double DEGREES_TO_TICKS_CONSTANT = 3584; // Inverse of other number
     public double maxTurretAngle; // The maximum angle the turret can turn in one direction (with 0 being forward)
     public double turretZeroConstant; // The constant that tells the turret angle motor where 0 is
-
     public Turret(int topShooterMotorCanID, int bottomShooterMotorCanID, int turnShooterMotorCanID, double maxTurretAngle){
         // Bottom Shooter Motor
         // bottomShooterMotor = new WPI_TalonFX(bottomShooterMotorCanID);
@@ -50,7 +49,7 @@ public class Turret {
         turnShooterMotorConfig.slot0.kD = Constants.TURN_SHOOTER_MOTOR_KD;
         turnShooterMotor.configAllSettings(turnShooterMotorConfig);
         turnShooterMotor.selectProfileSlot(0, 0);
-        turnShooterMotor.setNeutralMode(NeutralMode.Coast);
+        turnShooterMotor.setNeutralMode(NeutralMode.Brake);
         // Set the shooter to have its current position as its zero point
         this.setAngleZeroPoint();
         this.maxTurretAngle = maxTurretAngle;
@@ -64,7 +63,7 @@ public class Turret {
      * The code is set up so that 0 degrees needs to be directly forward
      */
     public void setAngleZeroPoint(){
-        turretZeroConstant = Double.parseDouble(RobotContainer.wheelAlignmentConstants.getProperty("TURRET", "0.0"));
+        turretZeroConstant = Double.parseDouble(RobotContainer.alignmentConstants.getProperty("TURRET", "0.0"));
     }
 
     /**
@@ -94,7 +93,9 @@ public class Turret {
             targetAngle = Math.signum(targetAngle) * maxTurretAngle;
         }
         // Power Turret + offset of the zero coonstant
-        turnShooterMotor.set(ControlMode.Position, targetAngle * DEGREES_TO_TICKS_CONSTANT + turretZeroConstant);
+        turnShooterMotor.set(ControlMode.Position, targetAngle * DEGREES_TO_TICKS_CONSTANT);
+        SmartDashboard.putNumber("Current Shooter Pos in Ticks", turnShooterMotor.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Target Shooter Pos in Ticks", targetAngle * DEGREES_TO_TICKS_CONSTANT + turretZeroConstant);
     }
 
     /**
@@ -102,9 +103,26 @@ public class Turret {
      * @param targetAngle the angle to go to, relative to the current orientation
      */
     public void setShooterRelativeAngle(double targetAngle){
-        double currentAngle = turnShooterMotor.getSelectedSensorPosition() * TICKS_TO_DEGREES_CONSTANT + turretZeroConstant;
+        double currentAngle = turnShooterMotor.getSelectedSensorPosition() * TICKS_TO_DEGREES_CONSTANT;
         double targetAbsoluteAngle = currentAngle + targetAngle;
         setShooterAbsoluteAngle(targetAbsoluteAngle);
+
+        SmartDashboard.putNumber("TARGET ABSOLUTE ANGLE", targetAbsoluteAngle);
+    }
+
+    /**
+     *  Sets the shooter to an angle relative to its current position while ignoring
+     * small inputs
+     * @param targetAngle the angle to go to, relv=ative to the current orientation
+     * @param deadZone the max input size to ignore
+     */
+    public void setCurrentShooterRelativeAngleWithDeadZone(double targetAngle, double deadZone){
+        if(Math.abs(targetAngle) > deadZone){
+            setShooterRelativeAngle(targetAngle);
+        }
+        else{
+            turnShooterMotor.stopMotor();
+        }
     }
 
     /**
@@ -132,7 +150,12 @@ public class Turret {
     }
 
     public double getCurrentAngle(){
-        return (turnShooterMotor.getSelectedSensorPosition() + turretZeroConstant) * TICKS_TO_DEGREES_CONSTANT ;
+        return (turnShooterMotor.getSelectedSensorPosition() - turretZeroConstant) * TICKS_TO_DEGREES_CONSTANT ;
 
     }
+
+    public void putAlignmentConstant() {
+        RobotContainer.alignmentConstants.put("TURRET", turnShooterMotor.getSelectedSensorPosition());
+    }
+   
 }

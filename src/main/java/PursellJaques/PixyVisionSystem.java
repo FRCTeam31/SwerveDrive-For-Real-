@@ -11,6 +11,7 @@ import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 import io.github.pseudoresonance.pixy2api.links.SPILink;
+import io.github.pseudoresonance.pixy2api.links.UARTLink;
 
 
 /** 
@@ -25,7 +26,8 @@ public class PixyVisionSystem {
      */
     public PixyVisionSystem(){
         pixy = Pixy2.createInstance(new SPILink());
-        pixy.init();
+        System.out.println("PIXY CODE: " + pixy.init(5));
+        pixy.setLED(255, 255, 255);
     }
 
     /**
@@ -60,11 +62,15 @@ public class PixyVisionSystem {
      * @param block the block whose values will be displayed
      */
     public void displayBlock(Block block){
-        if(block == null){
+        if(block == null) {
             SmartDashboard.putNumber("Block X", 99999);
             SmartDashboard.putNumber("Block Y", 99999);
         }
-        SmartDashboard.putNumber("Block X", block.getX());
-        SmartDashboard.putNumber("Block Y", block.getY());
+        else{
+            SmartDashboard.putNumber("Block X", block.getX());
+            SmartDashboard.putNumber("Block Y", block.getY());
+        }
+        
     }
+
 }

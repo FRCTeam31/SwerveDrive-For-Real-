@@ -30,7 +30,7 @@ public class CalibrateSwerve extends CommandBase {
     wheelAlignmentProperties.put("TURRET", Double.toString(RobotContainer.turret.getZeroAngleConstant()));
 
     try {
-      wheelAlignmentProperties.store(new FileOutputStream(Constants.WHEEL_ALIGNMENT_FILE_PATH), null);
+      wheelAlignmentProperties.store(new FileOutputStream(Constants.ALIGNMENT_FILE_PATH), null);
     } catch(IOException e){
       e.printStackTrace();
       System.out.println("Could not store properties");

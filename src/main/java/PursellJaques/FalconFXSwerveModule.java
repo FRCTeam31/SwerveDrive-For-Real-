@@ -57,7 +57,7 @@ public class FalconFXSwerveModule {
         anglePIDController = new PIDController(Constants.ANGLE_KP, Constants.ANGLE_KI, Constants.ANGLE_KD);
         angleEncoder = new AnalogInput(encoderChannel);
         anglePIDController.enableContinuousInput(-0.5, 0.5); // Makes the pid work with a non continuous value. Max and min are in rotations 
-        angleAlignmentConstant = Double.parseDouble(RobotContainer.wheelAlignmentConstants.getProperty(name, "0.0"));
+        angleAlignmentConstant = Double.parseDouble(RobotContainer.alignmentConstants.getProperty(name, "0.0"));
         System.out.println("THE ANGLE ALIGNMENT CONSTANTS ARE: " + angleAlignmentConstant);
         
         // Vectors
