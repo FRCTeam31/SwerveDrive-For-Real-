@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
+/**
+ * A command that allows the intake to be controlled by a joystick axis
+ * This does currently work
+ */
 public class TeleopBallIntakeCommand extends CommandBase {
   /** Creates a new TeleopBallIntakeCommand. */
   public TeleopBallIntakeCommand() {

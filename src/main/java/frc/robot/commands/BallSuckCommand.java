@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+/**
+ * A command that tells the robot to intake and drive forward for some duration
+ * This command does currently work
+ */
 public class BallSuckCommand extends CommandBase {
   // the times in nanoseconds to spin the intake motor and drive straight forward
   double suckDuration, driveDuration;

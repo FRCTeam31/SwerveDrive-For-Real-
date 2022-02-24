@@ -17,6 +17,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * A command used to calibrate the swerve drive and other calibratable components
+ * This command does currently work
+ */
 public class CalibrateSwerve extends CommandBase {
 
   // Called when the command is initially scheduled.

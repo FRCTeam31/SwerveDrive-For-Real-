@@ -12,6 +12,7 @@ import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 /**
  * A command to make the robot track a ball with the pixy
+ * This does currently work
  */
 public class TrackBallWithPixyCommand extends CommandBase {
   // Instance Variables

@@ -32,15 +32,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ShootBallCommand;
-import frc.robot.commands.SwerveModuleTestCommand;
 import frc.robot.commands.TeleopBallIntakeCommand;
-import frc.robot.commands.TrackBallCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -95,7 +92,6 @@ public class RobotContainer {
 
   // Commands
   public static DriveCommand driveCommand;
-  public static TrackBallCommand trackBallCommand;
   public static ShootBallCommand shootBallCommand;
   public static TeleopBallIntakeCommand teleopBallIntakeCommand;
   public static CalibrateSwerve configureWheelAlignments;
@@ -193,14 +189,12 @@ public class RobotContainer {
 
     // Commands
     driveCommand = new DriveCommand();
-    trackBallCommand = new TrackBallCommand();
     aimTurretTowardsTarget = new AimTurretTowardsTarget();
     shootBallCommand = new ShootBallCommand(1000);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
-    commandList.add(trackBallCommand);
     commandList.add(aimTurretTowardsTarget);
     commandList.add(shootBallCommand);
     commandList.add(teleopBallIntakeCommand);
@@ -223,7 +217,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //button1.whenPressed(driveCommand);
-    button2.whenPressed(trackBallCommand);
     button3.whenPressed(teleopBallIntakeCommand);
     button5.whenPressed(configureWheelAlignments);
     button4.whenPressed(aimTurretTowardsTarget);

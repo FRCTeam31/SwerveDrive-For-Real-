@@ -12,6 +12,7 @@ import frc.robot.RobotContainer;
 
 /**
  * Powers the shooter motors at a speed controlled by the shooter motor tree map for a set time
+ * This command does currently work
  */
 public class ShootBallCommand extends CommandBase {
   // Instance Variables
