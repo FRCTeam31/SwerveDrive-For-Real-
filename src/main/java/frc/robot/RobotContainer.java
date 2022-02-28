@@ -20,6 +20,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+
+import PursellJaques.ArcadeDrive;
 import PursellJaques.FalconFXSwerveDrive;
 import PursellJaques.FalconFXSwerveModule;
 import PursellJaques.InterpolatingTreeMap;
@@ -32,6 +34,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.CalibrateSwerve;
@@ -61,7 +65,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // Instance Variables
-
+  
   // Joystick
   public static Joystick joystick;
   public static Joystick joystick2;
@@ -78,8 +82,11 @@ public class RobotContainer {
   public static FalconFXSwerveDrive swerveDrive;
   public static Properties alignmentConstants;
 
+  // Differiental Drive Variables
+  public static ArcadeDrive arcadeDrive;
+  
   // Shooter Variables
-  public static Turret turret;
+  public static Turret turret;  
   public static InterpolatingTreeMap topMotorTreeMap;
   public static InterpolatingTreeMap bottomMotorTreeMap;
   
@@ -143,13 +150,17 @@ public class RobotContainer {
     // Constants.TML_AMCID, Constants.TML_EC, Constants.TML_P);
 
     // Create FalconFXSwerveDrive
-
     FalconFXSwerveModule[] swerveModules = { frontLeft, frontRight, backLeft, backRight };
     swerveDrive = new FalconFXSwerveDrive(swerveModules);
 
+    //  Create Differential Drive
+    FalconFXSwerveModule[] leftDifferentialDrive = {frontLeft, backLeft};
+    FalconFXSwerveModule[] rightDifferentialDrive = {frontRight, backRight};
+    arcadeDrive = new ArcadeDrive(leftDifferentialDrive, rightDifferentialDrive);
+
     // Joystick Controls
     joystick = new Joystick(Constants.JOYSTICK1_PORT);
-    joystick2 = new Joystick(Constants.JOYSTICK2_PORT);
+    // joystick2 = new Joystick(Constants.JOYSTICK2_PORT);
     button1 = new JoystickButton(joystick, 1);
     button2 = new JoystickButton(joystick, 2);
     button3 = new JoystickButton(joystick, 3);
@@ -244,12 +255,7 @@ public class RobotContainer {
   /**
    * Turrn of the Drive command
    */
-  public static void turnOffDriveCommands() {
-    // driveCommand.cancel();
-    // trackBallCommand.cancel();
-    // aimAtTargetCommand.cancel();
-    // shootBallCommand.cancel();
-  }
+ 
 
   /**
    * Schedule the drive Command

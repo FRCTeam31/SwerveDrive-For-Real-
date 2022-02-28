@@ -7,7 +7,6 @@ package frc.robot.commands;
 import PursellJaques.N_PID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class FieldOrientatedDriveWithTargetingCommand extends CommandBase {
@@ -43,7 +42,6 @@ public class FieldOrientatedDriveWithTargetingCommand extends CommandBase {
       // There is a valid target
       // Use feed-forward in order to calculate target angle (the angle the robot should face so that a ball shot would score)
       // Using the angular velocity as the feed-forward sensor
-      double angularVelocity = RobotContainer.navX.getAngle() - prevAngle; // CW velocity is a positive #, CCW is a negative #
       double targetAngle = 0 ;//- angularVelocity * Constants.FODWT_FEED_BACK_CONSTANT; 
       
       anglePower = anglePID.run(tx, targetAngle);

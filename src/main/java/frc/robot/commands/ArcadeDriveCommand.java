@@ -4,35 +4,34 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TeleopBallIntakeCommand extends CommandBase {
-  /** Creates a new TeleopBallIntakeCommand. */
-  public TeleopBallIntakeCommand() {
+
+public class ArcadeDriveCommand extends CommandBase {
+  /** Creates a new ArcadeDriveCommand. */
+  public ArcadeDriveCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("Ball Intake Command", "ACTIVE");
-    RobotContainer.cancelAllExcept(this);
+
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.intakeMotor.set(0.9 * RobotContainer.joystick2.getY());
+    RobotContainer.arcadeDrive.drive(RobotContainer.joystick.getY(), RobotContainer.joystick.getRawAxis(2));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.intakeMotor.stopMotor();
-    SmartDashboard.putString("Ball Intake Command", "NOT ACTIVE");
-
+    RobotContainer.arcadeDrive.stopMotors();
+    
   }
 
   // Returns true when the command should end.
