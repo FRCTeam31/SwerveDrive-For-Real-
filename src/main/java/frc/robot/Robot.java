@@ -52,6 +52,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     // System.out.println(RobotContainer.limelightTable.getEntry("tx").getDouble(0.0));
     RobotContainer.pixy.displayBlock(RobotContainer.pixy.getBiggestBlock(Pixy2CCC.CCC_SIG1));
+    // System.out.println(RobotContainer.pixy.getBiggestBlock(Pixy2CCC.CCC_SIG1).getX());
+ 
+    // RobotContainer.turret.setShooterRelativeAngle(RobotContainer.joystick2.getX());
+    // RobotContainer.turret.turnShooterMotor.set(RobotContainer.joystick2.getX());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -97,13 +101,12 @@ public class Robot extends TimedRobot {
     // RobotContainer.bottomShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED) ;
     // RobotContainer.topShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick2.getRawAxis(3) * Constants.FALCON_MAX_SPEED) ;
     // RobotContainer.turret.displayMetricsToSmartDashboard();
-    // //RobotContainer.turret.setShooterAbsoluteAngle(RobotContainer.joystick2.getTwist() * 90);
-    // RobotContainer.turret.setCurrentShooterRelativeAngleWithDeadZone(RobotContainer.joystick2.getRawAxis(2) * 100, 10);
+    //RobotContainer.turret.setShooterAbsoluteAngle(RobotContainer.joystick2.getTwist() * 90);
+    // RobotContainer.turret.setCurrentShooterRelativeAngleWithDeadZone(RobotContainer.joystick.getRawAxis(2) * 100, 10);
     // SmartDashboard.putNumber("INPUT TURRET ANGLE", RobotContainer.joystick2.getRawAxis(2) * 100);
     // // RobotContainer.turret.turnShooterMotor.set(RobotContainer.joystick2.getRawAxis(2));
     // SmartDashboard.putNumber("FALCON TEMP", RobotContainer.turret.turnShooterMotor.getTemperature());
     // RobotContainer.pixy.displayBlock(RobotContainer.pixy.getBiggestBlock(Constants.BLUE_BALL_PIXY_PROFILE));
-    // RobotContainer.intakeMotor.set(RobotContainer.joystick.getY());
     // RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED, RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED);
   }
 

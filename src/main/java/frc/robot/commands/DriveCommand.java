@@ -26,7 +26,7 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // X is left to right [-1, 1], Y is front to back [1, -1], Z is CCW to CW [-1, 1]
-    RobotContainer.swerveDrive.driveWithDeadZone(RobotContainer.joystick.getX(), RobotContainer.joystick.getY(), RobotContainer.joystick.getZ(), 0.1);
+    RobotContainer.swerveDrive.driveWithDeadZone(Math.pow(RobotContainer.joystick.getX(), 2) * Math.signum(RobotContainer.joystick.getX()), Math.pow(RobotContainer.joystick.getY(), 2) * Math.signum(RobotContainer.joystick.getY()), Math.pow(RobotContainer.joystick.getZ(), 2) * Math.signum(RobotContainer.joystick.getZ()), 0.1);
     //RobotContainer.swerveDrive.fieldOrientedDriveWithDeadZone(RobotContainer.joystick.getX(), -1 * RobotContainer.joystick.getY(), RobotContainer.joystick.getZ(), 0.1);
   }
 

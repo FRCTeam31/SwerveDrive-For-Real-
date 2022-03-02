@@ -45,7 +45,9 @@ import frc.robot.commands.ShootBallCommand;
 import frc.robot.commands.SwerveModuleTestCommand;
 import frc.robot.commands.TeleopBallIntakeCommand;
 import frc.robot.commands.TrackBallCommand;
+import frc.robot.commands.TrackBallWithPixyCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -107,6 +109,7 @@ public class RobotContainer {
   public static TeleopBallIntakeCommand teleopBallIntakeCommand;
   public static CalibrateSwerve configureWheelAlignments;
   public static AimTurretTowardsTarget aimTurretTowardsTarget;
+  public static TrackBallWithPixyCommand trackBallWithPixyCommand;
   public static ArrayList<Command> commandList;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
@@ -160,7 +163,7 @@ public class RobotContainer {
 
     // Joystick Controls
     joystick = new Joystick(Constants.JOYSTICK1_PORT);
-    // joystick2 = new Joystick(Constants.JOYSTICK2_PORT);
+    joystick2 = new Joystick(Constants.JOYSTICK2_PORT);
     button1 = new JoystickButton(joystick, 1);
     button2 = new JoystickButton(joystick, 2);
     button3 = new JoystickButton(joystick, 3);
@@ -209,10 +212,11 @@ public class RobotContainer {
     shootBallCommand = new ShootBallCommand(1000);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
+    trackBallWithPixyCommand = new TrackBallWithPixyCommand(Pixy2CCC.CCC_SIG1);
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
-    commandList.add(trackBallCommand);
-    commandList.add(aimTurretTowardsTarget);
+    commandList.add(trackBallWithPixyCommand);
+    // commandList.add(aimTurretTowardsTarget);
     commandList.add(shootBallCommand);
     commandList.add(teleopBallIntakeCommand);
     commandList.add(configureWheelAlignments);
@@ -233,11 +237,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //button1.whenPressed(driveCommand);
-    button2.whenPressed(trackBallCommand);
+    button1.whenPressed(driveCommand);
+    button2.whenPressed(trackBallWithPixyCommand);
     button3.whenPressed(teleopBallIntakeCommand);
-    button5.whenPressed(configureWheelAlignments);
     button4.whenPressed(aimTurretTowardsTarget);
+    button5.whenPressed(configureWheelAlignments);
+
     
     // button4.whenPressed(shootBallCommand);
   }

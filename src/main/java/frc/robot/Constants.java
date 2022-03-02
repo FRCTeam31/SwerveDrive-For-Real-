@@ -54,22 +54,22 @@ public final class Constants {
     // Front Left
     public static int FL_DMCID = 1;
     public static int FL_AMCID = 10;
-    public static int FL_EC = 0;
+    public static int FL_EC = 2;
     public static Vector FL_P = new Vector(-1, 1);
     // Front Right
     public static int FR_DMCID = 2;
-    public static int FR_AMCID = 11;
-    public static int FR_EC = 1;
+    public static int FR_AMCID = 9;
+    public static int FR_EC = 0;
     public static Vector FR_P = new Vector(1, 1);
     // Back Left
     public static int BL_DMCID = 3;
     public static int BL_AMCID = 12;
-    public static int BL_EC = 2;
+    public static int BL_EC = 3;
     public static Vector BL_P = new Vector(-1, -1);
     // Back Right
     public static int BR_DMCID = 4;
-    public static int BR_AMCID = 13;
-    public static int BR_EC = 3;
+    public static int BR_AMCID = 11;
+    public static int BR_EC = 1;
     public static Vector BR_P = new Vector(1, -1);
     // Test Module
     public static int TM_DMCID = 6;
@@ -100,9 +100,9 @@ public final class Constants {
     public static double SHOOTER_KP = 0.2;
     public static double SHOOTER_KI = 0.001;
     public static double SHOOTER_KD = 0; 
-    public static  double TURN_SHOOTER_MOTOR_KP = 0.5;
-    public static  double TURN_SHOOTER_MOTOR_KI = 0.00001;
-    public static  double TURN_SHOOTER_MOTOR_KD = 0.01;
+    public static  double TURN_SHOOTER_MOTOR_KP = 2;
+    public static  double TURN_SHOOTER_MOTOR_KI = 0.0000;
+    public static  double TURN_SHOOTER_MOTOR_KD = 0.5e-1;
     public static double TURRET_ANGLE_MOTOR_KP = 1;
     public static double TURRET_ANGLE_MOTOR_KI = 1;
     public static double TURRET_ANGLE_MOTOR_KD = 3;
@@ -123,7 +123,7 @@ public final class Constants {
     public static int GOAL_PROFILE = 1;
 
     // Intake Motor Constants
-    public static int INTAKE_MOTOR_CID = 9;
+    public static int INTAKE_MOTOR_CID = 13;
 
     // ##############################################################
     // COMMAND CONSTANTS
@@ -140,7 +140,7 @@ public final class Constants {
     public static double TRACK_BALL_COMMAND_ANGLE_D = 0;
     public static int TRACK_BALL_COMMAND_ANGLE_INVERTER = -1;
 
-    public static double SAFE_TURN_RATE = 0.3;
+    public static double SAFE_TURN_RATE = 0.0;
     public static double TARGET_TY = -15;
     public static double ANGLE_TOLERANCE = 3;
     public static double Y_TOLERANCE = 1;
@@ -182,16 +182,17 @@ public final class Constants {
     public static  double DDC_MAX_COUNT = 0; // Number of command loops the bot needs to be inside target 
     
     // Track Ball With Pixy Command Constants
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 1;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 1;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 1.2e-2;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_ANGLE_KD = 0;
-    public static  int TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 0; // Acceptable angle
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 0; // Target distance measurement
-    public static  int TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 0; // Acceptable distance tolerance as a percentage of the target distance measurement
-    public static  int TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT = 0;
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 5; // Acceptable angle
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
+    public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 5; // Acceptable distance tolerance as a percentage of the target distance measurement
+    public static  int TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT = 10;
 
 
 

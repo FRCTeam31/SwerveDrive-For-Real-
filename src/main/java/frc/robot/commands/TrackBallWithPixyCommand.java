@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import PursellJaques.N_PID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -70,10 +71,12 @@ public class TrackBallWithPixyCommand extends CommandBase {
         counter = 0;
       }
       // Calculate swerve outputs
-      double anglePower = anglePID.run(tx, 0.0);
+      double anglePower = anglePID.run(tx, Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX);
       double distancePower = distancePID.run(ty, Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY);
       // Drive Swerve drive
-      RobotContainer.swerveDrive.drive(0.0, distancePower, anglePower);
+      RobotContainer.swerveDrive.drive(0.0, -1 * distancePower, anglePower);
+      SmartDashboard.putNumber("PIXY distance power", distancePower);
+      SmartDashboard.putNumber("PIXY angle power", anglePower);
     }
   };
 
