@@ -4,13 +4,12 @@
 
 package frc.robot.commands;
 
-import PursellJaques.Turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SetShooterSpeedCommand extends CommandBase {
-  /** Creates a new SetShooterSpeedCommand. */
-  public SetShooterSpeedCommand() {
+public class RaiseIntakeCommand extends CommandBase {
+  /** Creates a new RaiseIntakeCommand. */
+  public RaiseIntakeCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,7 +20,8 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick2.getRawAxis(2), RobotContainer.joystick2.getRawAxis(2));
+    RobotContainer.raiseIntakeMotor.set(RobotContainer.joystick2.getRawAxis(0));
+
   }
 
   // Called once the command ends or is interrupted.

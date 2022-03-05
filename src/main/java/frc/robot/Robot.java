@@ -56,6 +56,14 @@ public class Robot extends TimedRobot {
  
     // RobotContainer.turret.setShooterRelativeAngle(RobotContainer.joystick2.getX());
     // RobotContainer.turret.turnShooterMotor.set(RobotContainer.joystick2.getX());
+    // RobotContainer.turret.topShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED);
+    // SmartDashboard.putNumber("Top Shooter Speed", RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED);
+
+    // RobotContainer.turret.bottomShooterMotor.set(ControlMode.Velocity, RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    // SmartDashboard.putNumber("Bottom Shooter Speed", RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    
+    // RobotContainer.turret.setShooterRelativeAngle(10 * RobotContainer.joystick2.getX());
+    System.out.println(RobotContainer.joystick.getRawAxis(5));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

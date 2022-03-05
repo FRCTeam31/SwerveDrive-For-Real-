@@ -38,9 +38,12 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTarget;
+import frc.robot.commands.AimTurretTowardsTargetZach;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RaiseIntakeCommand;
+import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallCommand;
 import frc.robot.commands.SwerveModuleTestCommand;
 import frc.robot.commands.TeleopBallIntakeCommand;
@@ -77,6 +80,7 @@ public class RobotContainer {
   public static JoystickButton button4;
   public static JoystickButton button5;
   public static JoystickButton button6;
+  public static JoystickButton button7;
 
   // Swerve Variables
   public static FalconFXSwerveModule frontLeft, frontRight, backLeft, backRight, testModule, testBackRight,
@@ -98,6 +102,7 @@ public class RobotContainer {
 
   // Intake Variables
   public static WPI_TalonSRX intakeMotor;
+  public static WPI_TalonSRX raiseIntakeMotor;
 
   // NavX
   public static AHRS navX = new AHRS(SerialPort.Port.kUSB);
@@ -110,7 +115,10 @@ public class RobotContainer {
   public static CalibrateSwerve configureWheelAlignments;
   public static AimTurretTowardsTarget aimTurretTowardsTarget;
   public static TrackBallWithPixyCommand trackBallWithPixyCommand;
+  public static SetShooterSpeedCommand setShooterSpeedCommand;
   public static ArrayList<Command> commandList;
+  public static AimTurretTowardsTargetZach aimTurretTowardsTargetZach;
+  public static RaiseIntakeCommand raiseIntakeCommand;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
 
@@ -170,6 +178,7 @@ public class RobotContainer {
     button4 = new JoystickButton(joystick, 4);
     button5 = new JoystickButton(joystick, 5);
     button6 = new JoystickButton(joystick, 6);
+    button7 = new JoystickButton(joystick, 7);
 
     // Shooter
     turret = new Turret(Constants.TOP_SHOOTER_CAN_ID, Constants.BOTTOM_SHOOTER_CAN_ID, Constants.TURRET_ANGLE_MOTOR_CAN_ID, Constants.TURRET_MAX_ANGLE);
@@ -183,6 +192,7 @@ public class RobotContainer {
 
     // Intake Motor
     intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR_CID);
+    raiseIntakeMotor = new WPI_TalonSRX(Constants.RAISE_INTAKE_MOTOR_CID);
 
     // Vision systems
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -213,6 +223,9 @@ public class RobotContainer {
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
     trackBallWithPixyCommand = new TrackBallWithPixyCommand(Pixy2CCC.CCC_SIG1);
+    setShooterSpeedCommand = new SetShooterSpeedCommand();
+    aimTurretTowardsTargetZach = new AimTurretTowardsTargetZach();
+    raiseIntakeCommand = new RaiseIntakeCommand();
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
     commandList.add(trackBallWithPixyCommand);
@@ -242,6 +255,9 @@ public class RobotContainer {
     button3.whenPressed(teleopBallIntakeCommand);
     button4.whenPressed(aimTurretTowardsTarget);
     button5.whenPressed(configureWheelAlignments);
+    button6.whenPressed(setShooterSpeedCommand);
+    button7.whenPressed(aimTurretTowardsTargetZach);
+    
 
     
     // button4.whenPressed(shootBallCommand);
@@ -275,10 +291,10 @@ public class RobotContainer {
   public static void cancelAllExcept(Command canceler) {
     int identity = commandList.indexOf(canceler);
 
-    for (int i = 0; i < commandList.size(); i++) {
-      if (i != identity) {
-        commandList.get(i).cancel();
-      }
-    }
+  //   for (int i = 0; i < commandList.size(); i++) {
+  //     if (i != identity) {
+  //       commandList.get(i).cancel();
+  //     }
+  //   }
   }
 }

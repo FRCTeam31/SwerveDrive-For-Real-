@@ -29,7 +29,10 @@ public final class Constants {
     // HARDWARE CONSTANTS
     // ##############################################################
 
-	// Swerve Module Constants
+	
+    
+    public static final int RAISE_INTAKE_MOTOR_CID = 0;
+    // Swerve Module Constants
     // Angle PID
     public static double ANGLE_KP = 7;
     public static double ANGLE_KI = 1;
@@ -100,7 +103,7 @@ public final class Constants {
     public static double SHOOTER_KP = 0.2;
     public static double SHOOTER_KI = 0.001;
     public static double SHOOTER_KD = 0; 
-    public static  double TURN_SHOOTER_MOTOR_KP = 2;
+    public static  double TURN_SHOOTER_MOTOR_KP = 1.0/40.0;
     public static  double TURN_SHOOTER_MOTOR_KI = 0.0000;
     public static  double TURN_SHOOTER_MOTOR_KD = 0.5e-1;
     public static double TURRET_ANGLE_MOTOR_KP = 1;
@@ -109,6 +112,8 @@ public final class Constants {
     public static double[] TREE_MAP_KEYS =    {-17.0, 0};
     public static double[] TOP_MOTOR_TREE_MAP_VALUES = {0.0, 1};
     public static double[] BOTTOM_MOTOR_TREE_VALUES = {0.0, 1};
+    public static  Integer AIM_TURRET_TOWARDS_TARGET_COMMNAND_MAX_NO_TARGET_COUNT = 10;
+    public static  double AIM_TURRET_TOWARDS_TARGET_COMMAND_ALPHA = 0.8;
 
     // Joystick Constants
     public static int JOYSTICK1_PORT = 1;
@@ -182,10 +187,10 @@ public final class Constants {
     public static  double DDC_MAX_COUNT = 0; // Number of command loops the bot needs to be inside target 
     
     // Track Ball With Pixy Command Constants
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 0;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 2e-3;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 1.2e-2;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 3e-3;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_ANGLE_KD = 0;
     public static  int TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 5; // Acceptable angle
@@ -193,6 +198,9 @@ public final class Constants {
     public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
     public static  int TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 5; // Acceptable distance tolerance as a percentage of the target distance measurement
     public static  int TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT = 10;
+    public static  int ACCECPTABLE_NO_TARGET_COUNT = 10; // The max number of frames with not targets for the code to predict ball position
+    public static  double TRACK_BALL_WITH_PIXY_ALPHA = 0.8; // The constant that affects how much weight we give to the past values [0 - 1], 
+    // High values means the new value has more weight, low values mean the owld value has more weight
 
 
 
