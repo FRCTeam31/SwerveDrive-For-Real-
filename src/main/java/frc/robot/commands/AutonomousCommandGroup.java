@@ -16,8 +16,7 @@ public class AutonomousCommandGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-     new AimTurretTowardsTargetZach(),
-     new ShootBallCommand(maxTime)
+     new AimTurretTowardsTargetZach()
     );
   }
 }
