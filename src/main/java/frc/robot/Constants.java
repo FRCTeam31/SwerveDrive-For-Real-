@@ -4,6 +4,8 @@
 
 package frc.robot;
 import PursellJaques.Vector;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 
 /**
@@ -30,8 +32,13 @@ public final class Constants {
     // ##############################################################
 
 	
-    
-    
+    // Swerve Drive Constants
+    public static double SWERVE_DRIVE_ANGLE_SLEW_RATE_LIMTER = 720; // Maximum change in input angle in 1 second 
+    public static double SWERVE_DRIVE_DRIVE_SLEW_RATE_LIMITER = 2; // Maximum change in input magnitude in 1 second
+    public static double SWERVE_DRIVE_METERS_TO_TICKS = 2048.0 / 0.31918581360576; // 2048 ticks / rotation & 4 pi inches / rotation
+    public static double SWERVE_WHEEL_TICKS_TO_METERS = 0.31918581360576 / 2048.0;
+    public static final double ROBOT_LOOPING_PERIOD = 0.02; // The time it takes for one robot control loop
+
     // Swerve Module Constants
     // Angle PID
     public static double ANGLE_KP = 7;
@@ -135,6 +142,15 @@ public final class Constants {
     // ##############################################################
     // COMMAND CONSTANTS
     // ##############################################################
+
+    // Drive to Distance With Motion Command Constants
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KP = 1;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KI = 0;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KD = 0;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_MAX_VELOCITY = 10;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION = 10;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE = 0.1; // Tolerance as a percent
+    public static final int DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER = 10; // Length of loops that robot needs to be inside target distance
 
     // Track ball command constants (OUTDATED COMMAND)
     public static double TRACK_BALL_COMMAND_DISTANCE_P = 0.01;

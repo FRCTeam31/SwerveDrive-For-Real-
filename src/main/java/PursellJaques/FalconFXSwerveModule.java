@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -20,13 +21,15 @@ public class FalconFXSwerveModule {
     // Instance Variables
     // Drive Variables
     public WPI_TalonFX driveMotor;
+    public SlewRateLimiter driveRateLimiter;
 
     // Angle Variables
     public double angleAlignmentConstant; 
     public WPI_TalonSRX angleMotor;
     public PIDController anglePIDController;
     public AnalogInput angleEncoder; // device that maps -0.5 rotations of a shaft to -5.0 volts and 0.5 rotations to +5.0 volts
-    
+    public SlewRateLimiter angleRateLimiter; // An object that keeps the change in angle inputs below some value 
+
     // Vectors
     public Vector position;
     public Vector perpendicular;
@@ -55,6 +58,7 @@ public class FalconFXSwerveModule {
         driveMotor.selectProfileSlot(0, 0); // 0 for slot0 and 0 again to specify primary closed loop PID
         driveMotor.configClosedloopRamp(0.2);
         driveMotor.setNeutralMode(NeutralMode.Coast);
+        driveRateLimiter = new SlewRateLimiter(Constants.SWERVE_DRIVE_DRIVE_SLEW_RATE_LIMITER);
 
         // Angle Variables
         angleMotor = new WPI_TalonSRX(angleMotorCID);
@@ -63,6 +67,7 @@ public class FalconFXSwerveModule {
         anglePIDController.enableContinuousInput(-0.5, 0.5); // Makes the pid work with a non continuous value. Max and min are in rotations 
         angleAlignmentConstant = Double.parseDouble(RobotContainer.alignmentConstants.getProperty(name, "0.0"));
         System.out.println("THE ANGLE ALIGNMENT CONSTANTS ARE: " + angleAlignmentConstant);
+        angleRateLimiter = new SlewRateLimiter(Constants.SWERVE_DRIVE_ANGLE_SLEW_RATE_LIMTER);
         
         // Vectors
         this.position = position;
@@ -85,8 +90,8 @@ public class FalconFXSwerveModule {
      */
     public void drive(Vector input){
         // Break vector into r, theta
-        double r = input.getMagnitude(); // Power to give to motor from [0 to 1] 
-        double theta = input.getTheta(); // Angle in degrees from [-180, 180] where 0 is directly ahead (^)
+        double r = driveRateLimiter.calculate(input.getMagnitude()); // Power to give to motor from [0 to 1] 
+        double theta = angleRateLimiter.calculate(input.getTheta()); // Angle in degrees from [-180, 180] where 0 is directly ahead (^)
 
         // Drive angle motor
         double currentAnglePosition = (((angleEncoder.getVoltage() + angleAlignmentConstant) % 5) - 2.5) / 5;  // Will return a value between [-0.5, 0.5] rotations
