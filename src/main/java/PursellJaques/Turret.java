@@ -64,6 +64,7 @@ public class Turret {
      */
     public void setAngleZeroPoint(){
         turretZeroConstant = Double.parseDouble(RobotContainer.alignmentConstants.getProperty("TURRET", "0.0"));
+        System.out.println("Turret Zero Constant: " + turretZeroConstant);
     }
 
     /**

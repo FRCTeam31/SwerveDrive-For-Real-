@@ -31,7 +31,7 @@ public final class Constants {
 
 	
     
-    public static final int RAISE_INTAKE_MOTOR_CID = 0;
+    
     // Swerve Module Constants
     // Angle PID
     public static double ANGLE_KP = 7;
@@ -56,12 +56,12 @@ public final class Constants {
     // Swerve Module values
     // Front Left
     public static int FL_DMCID = 1;
-    public static int FL_AMCID = 10;
+    public static int FL_AMCID = 8;
     public static int FL_EC = 2;
     public static Vector FL_P = new Vector(-1, 1);
     // Front Right
     public static int FR_DMCID = 2;
-    public static int FR_AMCID = 9;
+    public static int FR_AMCID = 13;
     public static int FR_EC = 0;
     public static Vector FR_P = new Vector(1, 1);
     // Back Left
@@ -71,7 +71,7 @@ public final class Constants {
     public static Vector BL_P = new Vector(-1, -1);
     // Back Right
     public static int BR_DMCID = 4;
-    public static int BR_AMCID = 11;
+    public static int BR_AMCID = 14;
     public static int BR_EC = 1;
     public static Vector BR_P = new Vector(1, -1);
     // Test Module
@@ -109,9 +109,9 @@ public final class Constants {
     public static double TURRET_ANGLE_MOTOR_KP = 1;
     public static double TURRET_ANGLE_MOTOR_KI = 1;
     public static double TURRET_ANGLE_MOTOR_KD = 3;
-    public static double[] TREE_MAP_KEYS =    {-17.0, 0};
-    public static double[] TOP_MOTOR_TREE_MAP_VALUES = {0.0, 1};
-    public static double[] BOTTOM_MOTOR_TREE_VALUES = {0.0, 1};
+    public static double[] TREE_MAP_KEYS =    {-18.4, -16, -14.7, -12.8, -10, -7.7, -6, 0, 6, 7.4, 14};
+    public static double[] TOP_MOTOR_TREE_MAP_VALUES = {-4500, -9750, -9750, -9750, -6937, -4125, -3375, -2812, -2812, -2062, 0};
+    public static double[] BOTTOM_MOTOR_TREE_VALUES = {-12000, -10687.5, -11437, -11437, -11437, -9937, -9937, -9937, -9937, -9937, -13500};
     public static  Integer AIM_TURRET_TOWARDS_TARGET_COMMNAND_MAX_NO_TARGET_COUNT = 10;
     public static  double AIM_TURRET_TOWARDS_TARGET_COMMAND_ALPHA = 0.8;
 
@@ -128,7 +128,9 @@ public final class Constants {
     public static int GOAL_PROFILE = 1;
 
     // Intake Motor Constants
-    public static int INTAKE_MOTOR_CID = 13;
+    public static int INTAKE_MOTOR_CID = 9;
+    public static  int RAISE_INTAKE_MOTOR_CID = 11;
+    public static  double SAFE_RAISE_MOTOR_SPEED = 0.5;
 
     // ##############################################################
     // COMMAND CONSTANTS
@@ -145,7 +147,7 @@ public final class Constants {
     public static double TRACK_BALL_COMMAND_ANGLE_D = 0;
     public static int TRACK_BALL_COMMAND_ANGLE_INVERTER = -1;
 
-    public static double SAFE_TURN_RATE = 0.0;
+    public static double SAFE_TURN_RATE = 0.1;
     public static double TARGET_TY = -15;
     public static double ANGLE_TOLERANCE = 3;
     public static double Y_TOLERANCE = 1;
@@ -165,38 +167,38 @@ public final class Constants {
     public static  double FODWT_F = 0;
 
     // Turn To Angle Command Constants
-    public static double TTA_KP = 1;
+    public static double TTA_KP = 1e-2;
     public static double TTA_KI = 0;
     public static double TTA_KD = 0;
-    public static double TTA_ERROR = 2; // Degrees of tolerance
+    public static double TTA_ERROR = 10; // Degrees of tolerance
     public static double TTA_MAX_COUNTER = 0; // Number of command loops the robot needs to be inside the tolerance
 
     // Autonomous Command Group Constants
-    public static double BALL_SUCK_SPEED = 0.3;
-    public static double SAFE_INTAKE_SPEED = 0.3;
+    public static double BALL_SUCK_SPEED = -0.3;
+    public static double SAFE_INTAKE_SPEED = 0.7;
     public static double AUTO_BALL_INTAKE_DRIVE_TIME = 222;
     public static double AUTO_BALL_INTAKE_SUCK_TIME = 666;
     public static int AUTON_SHOOT_MAX_TIME = 0;
 
     // Drive Distance Command Constants
     public static double DISTANCE_TO_FIRST_BALL_TICKS = 0;
-    public static  double DDC_KP = 1;
-    public static  double DDC_KI = 0;
+    public static  double DDC_KP = 1e-5;
+    public static  double DDC_KI = 0.0;
     public static  double DDC_KD = 0;
-    public static  int DDC_TOLERANCE = 0; // Tolerance as a percentage of the target distance
+    public static  double DDC_TOLERANCE = 0.1; // Tolerance as a percentage of the target distance
     public static  double DDC_MAX_COUNT = 0; // Number of command loops the bot needs to be inside target 
     
     // Track Ball With Pixy Command Constants
-    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 2e-3;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 2.3e-3;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 3e-3;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_ANGLE_KD = 0;
-    public static  int TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 5; // Acceptable angle
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE = 0.05; // Acceptable angle
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
     public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
-    public static  int TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 5; // Acceptable distance tolerance as a percentage of the target distance measurement
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE = 0.05; // Acceptable distance tolerance as a percentage of the target distance measurement
     public static  int TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT = 10;
     public static  int ACCECPTABLE_NO_TARGET_COUNT = 10; // The max number of frames with not targets for the code to predict ball position
     public static  double TRACK_BALL_WITH_PIXY_ALPHA = 0.8; // The constant that affects how much weight we give to the past values [0 - 1], 

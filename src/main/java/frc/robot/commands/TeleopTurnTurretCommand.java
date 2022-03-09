@@ -5,12 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-public class RaiseIntakeCommand extends CommandBase {
-  /** Creates a new RaiseIntakeCommand. */
-  public RaiseIntakeCommand() {
+public class TeleopTurnTurretCommand extends CommandBase {
+  /** Creates a new TelleopTurnTurretCommand. */
+  public TeleopTurnTurretCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -21,16 +21,16 @@ public class RaiseIntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   if(RobotContainer.joystick.getPOV() == 0){
-     RobotContainer.raiseIntakeMotor.set(Constants.SAFE_RAISE_MOTOR_SPEED);
-   }
-   else if(RobotContainer.joystick.getPOV() == 180){
-     RobotContainer.raiseIntakeMotor.set(Constants.SAFE_RAISE_MOTOR_SPEED * -1);
-   }
-   else{
-     RobotContainer.raiseIntakeMotor.stopMotor();
-   }
-
+    if(RobotContainer.joystick.getPOV() == 90){
+        RobotContainer.turret.setShooterRelativeAngle(20);
+    }
+    else if(RobotContainer.joystick.getPOV() == 270){
+        RobotContainer.turret.setShooterRelativeAngle(-20);
+    }
+    else{
+      RobotContainer.turret.setShooterRelativeAngle(0);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

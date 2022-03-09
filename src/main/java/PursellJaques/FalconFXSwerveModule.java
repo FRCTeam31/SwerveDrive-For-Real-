@@ -5,11 +5,13 @@
 package PursellJaques;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
@@ -51,6 +53,8 @@ public class FalconFXSwerveModule {
         driveMotorConfig.slot0.kD = Constants.FALCON_KD;
         driveMotor.configAllSettings(driveMotorConfig);
         driveMotor.selectProfileSlot(0, 0); // 0 for slot0 and 0 again to specify primary closed loop PID
+        driveMotor.configClosedloopRamp(0.2);
+        driveMotor.setNeutralMode(NeutralMode.Coast);
 
         // Angle Variables
         angleMotor = new WPI_TalonSRX(angleMotorCID);
@@ -105,7 +109,8 @@ public class FalconFXSwerveModule {
         // Printouts
         // System.out.println("(" + r * Constants.FALCON_MAX_SPEED + ", " + driveMotor.getSelectedSensorVelocity() + ")");
         // System.out.println("Current Rotation: " + currentAnglePosition + ", Target Rotation: " + thetaToRotations + ", Theta: " + theta);
-
+        SmartDashboard.putNumber("MODULE ANGLE", currentAnglePosition);
+        // System.out.println(currentAnglePosition);
     }
 
     /**

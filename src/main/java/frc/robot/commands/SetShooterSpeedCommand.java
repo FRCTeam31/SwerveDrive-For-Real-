@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import PursellJaques.Turret;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class SetShooterSpeedCommand extends CommandBase {
@@ -21,10 +23,14 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick2.getRawAxis(2), RobotContainer.joystick2.getRawAxis(2));
+    RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED, RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    SmartDashboard.putNumber("Top Motor Speed", RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    SmartDashboard.putNumber("Bottom Motor Speed", RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+
   }
 
   // Called once the command ends or is interrupted.
+
   @Override
   public void end(boolean interrupted) {}
 

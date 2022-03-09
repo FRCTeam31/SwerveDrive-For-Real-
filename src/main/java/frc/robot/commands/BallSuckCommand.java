@@ -25,27 +25,29 @@ public class BallSuckCommand extends CommandBase {
   @Override
   public void initialize() {
     RobotContainer.cancelAllExcept(this);
+    startTime = (double) System.currentTimeMillis();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     timeElapsed = (double)System.currentTimeMillis();
-    if (timeElapsed < driveDuration) {
+    if (timeElapsed < startTime + driveDuration) {
       RobotContainer.swerveDrive.drive(0, Constants.BALL_SUCK_SPEED, 0);
     }
-    RobotContainer.intakeMotor.set(ControlMode.Velocity, Constants.SAFE_INTAKE_SPEED * Constants.FALCON_MAX_SPEED);
+    RobotContainer.intakeMotor.set(Constants.SAFE_INTAKE_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    RobotContainer.intakeMotor.stopMotor();
+    RobotContainer.swerveDrive.stopModulesMotion();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timeElapsed > suckDuration;
+    return timeElapsed > startTime + suckDuration;
   }
 }

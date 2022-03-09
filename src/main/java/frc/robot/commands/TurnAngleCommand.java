@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import PursellJaques.N_PID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -29,23 +32,28 @@ public class TurnAngleCommand extends CommandBase {
     anglePIDController.reset(0);
     counter = 0;
     RobotContainer.cancelAllExcept(this);
+    RobotContainer.swerveDrive.setNeutralMode(NeutralMode.Brake);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     RobotContainer.swerveDrive.drive(0, 0, anglePIDController.run(RobotContainer.navX.getAngle(), targetAngle));
+    SmartDashboard.putNumber("Current Robot Angle", RobotContainer.navX.getAngle());
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.swerveDrive.stopModulesMotion();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     double currentAngle = RobotContainer.navX.getAngle();
-    if(currentAngle < targetAngle + Constants.TTA_ERROR & currentAngle > targetAngle - Constants.TTA_ERROR){
+    if(currentAngle < targetAngle + Constants.TTA_ERROR && currentAngle > targetAngle - Constants.TTA_ERROR){
       counter ++;
     }
     else{

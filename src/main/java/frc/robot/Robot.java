@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Targety ty", RobotContainer.limelightTable.getEntry("ty").getDouble(0.0));
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -63,7 +64,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Bottom Shooter Speed", RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
     
     // RobotContainer.turret.setShooterRelativeAngle(10 * RobotContainer.joystick2.getX());
-    System.out.println(RobotContainer.joystick.getRawAxis(5));
+    // System.out.println(RobotContainer.joystick.getRawAxis(5));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -81,6 +82,8 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
+
+      
     }
   }
 

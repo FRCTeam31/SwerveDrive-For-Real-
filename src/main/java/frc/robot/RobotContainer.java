@@ -39,16 +39,22 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.AimTurretTowardsTargetZach;
+import frc.robot.commands.AutoBallPickupCommand;
+import frc.robot.commands.AutonomousCommandGroup;
+import frc.robot.commands.BallSuckCommand;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RaiseIntakeCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallCommand;
 import frc.robot.commands.SwerveModuleTestCommand;
 import frc.robot.commands.TeleopBallIntakeCommand;
+import frc.robot.commands.TeleopTurnTurretCommand;
 import frc.robot.commands.TrackBallCommand;
 import frc.robot.commands.TrackBallWithPixyCommand;
+import frc.robot.commands.TurnAngleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,8 +78,7 @@ public class RobotContainer {
   // Instance Variables
   
   // Joystick
-  public static Joystick joystick;
-  public static Joystick joystick2;
+  public static Joystick joystick, joystick2;
   public static JoystickButton button1;
   public static JoystickButton button2;
   public static JoystickButton button3;
@@ -81,6 +86,9 @@ public class RobotContainer {
   public static JoystickButton button5;
   public static JoystickButton button6;
   public static JoystickButton button7;
+  public static JoystickButton button8;
+  public static JoystickButton button9;
+  public static JoystickButton button10;
 
   // Swerve Variables
   public static FalconFXSwerveModule frontLeft, frontRight, backLeft, backRight, testModule, testBackRight,
@@ -118,7 +126,13 @@ public class RobotContainer {
   public static SetShooterSpeedCommand setShooterSpeedCommand;
   public static ArrayList<Command> commandList;
   public static AimTurretTowardsTargetZach aimTurretTowardsTargetZach;
+  public static TeleopTurnTurretCommand teleopTurnTurretCommand;
   public static RaiseIntakeCommand raiseIntakeCommand;
+  public static BallSuckCommand ballSuckCommand;
+  public static AutoBallPickupCommand autoBallPickupCommand;
+  public static DriveDistanceCommand driveDistanceCommand;
+  public static TurnAngleCommand turnAngleCommand;
+  public static AutonomousCommandGroup autonomousCommandGroup;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
 
@@ -161,7 +175,7 @@ public class RobotContainer {
     // Constants.TML_AMCID, Constants.TML_EC, Constants.TML_P);
 
     // Create FalconFXSwerveDrive
-    FalconFXSwerveModule[] swerveModules = { frontLeft, frontRight, backLeft, backRight };
+    FalconFXSwerveModule[] swerveModules = {frontLeft, frontRight, backLeft, backRight};
     swerveDrive = new FalconFXSwerveDrive(swerveModules);
 
     //  Create Differential Drive
@@ -171,7 +185,7 @@ public class RobotContainer {
 
     // Joystick Controls
     joystick = new Joystick(Constants.JOYSTICK1_PORT);
-    joystick2 = new Joystick(Constants.JOYSTICK2_PORT);
+    joystick2 = new Joystick(2);
     button1 = new JoystickButton(joystick, 1);
     button2 = new JoystickButton(joystick, 2);
     button3 = new JoystickButton(joystick, 3);
@@ -179,6 +193,9 @@ public class RobotContainer {
     button5 = new JoystickButton(joystick, 5);
     button6 = new JoystickButton(joystick, 6);
     button7 = new JoystickButton(joystick, 7);
+    button8 = new JoystickButton(joystick, 8);
+    button9 = new JoystickButton(joystick, 9);
+    button10 = new JoystickButton(joystick, 10);
 
     // Shooter
     turret = new Turret(Constants.TOP_SHOOTER_CAN_ID, Constants.BOTTOM_SHOOTER_CAN_ID, Constants.TURRET_ANGLE_MOTOR_CAN_ID, Constants.TURRET_MAX_ANGLE);
@@ -226,13 +243,24 @@ public class RobotContainer {
     setShooterSpeedCommand = new SetShooterSpeedCommand();
     aimTurretTowardsTargetZach = new AimTurretTowardsTargetZach();
     raiseIntakeCommand = new RaiseIntakeCommand();
+    teleopTurnTurretCommand = new TeleopTurnTurretCommand();
+    raiseIntakeCommand = new RaiseIntakeCommand();
+    ballSuckCommand = new BallSuckCommand(1000, 1000);
+    autoBallPickupCommand = new AutoBallPickupCommand();
+    driveDistanceCommand = new DriveDistanceCommand(100000);
+    turnAngleCommand = new TurnAngleCommand(90);
+    autonomousCommandGroup = new AutonomousCommandGroup();
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
+    commandList.add(driveDistanceCommand);
+    commandList.add(turnAngleCommand);
     commandList.add(trackBallWithPixyCommand);
+    commandList.add(autonomousCommandGroup);
     // commandList.add(aimTurretTowardsTarget);
-    commandList.add(shootBallCommand);
-    commandList.add(teleopBallIntakeCommand);
-    commandList.add(configureWheelAlignments);
+    // commandList.add(shootBallCommand);
+    // commandList.add(teleopBallIntakeCommand);
+    // commandList.add(configureWheelAlignments);
+
 
     // Test Commands
     // swerveModuleTestCommand = new SwerveModuleTestCommand(testModule);
@@ -251,17 +279,24 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     button1.whenPressed(driveCommand);
-    button2.whenPressed(trackBallWithPixyCommand);
+    button2.whenPressed(teleopTurnTurretCommand);
     button3.whenPressed(teleopBallIntakeCommand);
-    button4.whenPressed(aimTurretTowardsTarget);
+    button4.whenPressed(trackBallWithPixyCommand);
     button5.whenPressed(configureWheelAlignments);
-    button6.whenPressed(setShooterSpeedCommand);
-    button7.whenPressed(aimTurretTowardsTargetZach);
+    button6.whenPressed(driveDistanceCommand);
+    button7.whenPressed(turnAngleCommand);
+    button8.whenPressed(aimTurretTowardsTargetZach);
+    button9.whenPressed(autonomousCommandGroup);
     
+
+
+
 
     
     // button4.whenPressed(shootBallCommand);
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -291,10 +326,10 @@ public class RobotContainer {
   public static void cancelAllExcept(Command canceler) {
     int identity = commandList.indexOf(canceler);
 
-  //   for (int i = 0; i < commandList.size(); i++) {
-  //     if (i != identity) {
-  //       commandList.get(i).cancel();
-  //     }
-  //   }
+    for (int i = 0; i < commandList.size(); i++) {
+      if (i != identity) {
+        commandList.get(i).cancel();
+      }
+    }
   }
 }

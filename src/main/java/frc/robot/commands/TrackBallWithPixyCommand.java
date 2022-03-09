@@ -102,9 +102,11 @@ public class TrackBallWithPixyCommand extends CommandBase {
       // Calculate avgX and avgY (this will be used as the current values in order to smooth out the data)
       avgX += Constants.TRACK_BALL_WITH_PIXY_ALPHA * (tx - avgX);
       avgY += Constants.TRACK_BALL_WITH_PIXY_ALPHA * (ty - avgY);
+      SmartDashboard.putNumber("AVGX", avgX);
+      SmartDashboard.putNumber("AVGY", avgY);
 
       // Update validPostionCounter
-      if(avgX < 1 * Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE && avgX > -1 * Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE &&
+      if(avgX < Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX * (1 + Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE) && avgX > Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX * (1 - Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_TOLERANCE) &&
       avgY < Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY * (1 + Constants.TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE) && avgY > Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY * (1 - Constants.TRACK_BALL_WITH_PIXY_COMMAND_TY_TOLERANCE)){
         // Target is within tolerance for angle and distance, increment validPostionCounter
         validPostionCounter ++; 
@@ -120,6 +122,7 @@ public class TrackBallWithPixyCommand extends CommandBase {
       RobotContainer.swerveDrive.drive(0.0, -1 * distancePower, -1 * anglePower);
       SmartDashboard.putNumber("PIXY distance power", distancePower);
       SmartDashboard.putNumber("PIXY angle power", anglePower);
+      SmartDashboard.putNumber("Valid Pos Counter", validPostionCounter);
 
       // Update values
       prevX2 = prevX;

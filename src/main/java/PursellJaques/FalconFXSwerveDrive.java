@@ -4,6 +4,8 @@
 
 package PursellJaques;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import frc.robot.RobotContainer;
 
 /** Add your docs here. */
@@ -131,6 +133,18 @@ public class FalconFXSwerveDrive {
     public void stopModulesMotion(){
         for(FalconFXSwerveModule swerveModule: swerveModules){
             swerveModule.stopMotion();
+        }
+    }
+
+    /**
+     * Set all modules to some control mode:
+     * NeutralMode.Coast
+     * NeutralMode.Brake
+     * @param mode
+     */
+    public void setNeutralMode(NeutralMode mode){
+        for(FalconFXSwerveModule swerveModule: swerveModules){
+            swerveModule.driveMotor.setNeutralMode(mode);
         }
     }
 }

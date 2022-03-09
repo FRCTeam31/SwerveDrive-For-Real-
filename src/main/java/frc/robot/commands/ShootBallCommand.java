@@ -62,6 +62,7 @@ public class ShootBallCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (time > maxTime);
+    // return (time > maxTime);
+    return false;
   }
 }

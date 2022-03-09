@@ -5,8 +5,11 @@
 package frc.robot.commands;
 
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import PursellJaques.FalconFXSwerveModule;
 import PursellJaques.N_PID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -33,6 +36,7 @@ public class DriveDistanceCommand extends CommandBase {
     distancePIDController.reset(0);
     counter = 0;
     RobotContainer.cancelAllExcept(this);
+    RobotContainer.swerveDrive.setNeutralMode(NeutralMode.Brake);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,12 +50,14 @@ public class DriveDistanceCommand extends CommandBase {
     sensorAccumulator /= RobotContainer.swerveDrive.swerveModules.length;
 
     // Drive forward using PID
-    RobotContainer.swerveDrive.drive(0, distancePIDController.run(sensorAccumulator, targetDistance), 0);
+    RobotContainer.swerveDrive.drive(0, -1 * distancePIDController.run(sensorAccumulator, targetDistance), 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.swerveDrive.stopModulesMotion();
+  }
 
   // Returns true when the command should end.
   @Override
@@ -65,11 +71,12 @@ public class DriveDistanceCommand extends CommandBase {
 
     if(sensorAccumulator < targetDistance * (1 + Constants.DDC_TOLERANCE) && sensorAccumulator > targetDistance * (1 - Constants.DDC_TOLERANCE)){
       counter ++;
+      System.out.println("INSIDE TARGET DISTANCE");
     }
     else{
       counter = 0;
     }
-
+    SmartDashboard.putNumber("Current Motor Positions", sensorAccumulator);
     return (counter > Constants.DDC_MAX_COUNT);
   }
 }

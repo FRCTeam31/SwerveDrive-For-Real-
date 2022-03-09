@@ -24,7 +24,7 @@ public class TeleopBallIntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.intakeMotor.set(0.9 * RobotContainer.joystick2.getY());
+    RobotContainer.intakeMotor.set(0.9 * RobotContainer.joystick.getRawAxis(4));
   }
 
   // Called once the command ends or is interrupted.
