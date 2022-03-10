@@ -40,12 +40,13 @@ import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.AimTurretTowardsTargetZach;
 import frc.robot.commands.AutoBallPickupCommand;
-import frc.robot.commands.AutonomousCommandGroup;
+import frc.robot.commands.AutonomousCommandGroupSides;
 import frc.robot.commands.BallSuckCommand;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.FullAutonParalellCommandGroup;
 import frc.robot.commands.RaiseIntakeCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallCommand;
@@ -115,6 +116,9 @@ public class RobotContainer {
   // NavX
   public static AHRS navX = new AHRS(SerialPort.Port.kUSB);
 
+  // Alliance Signature
+  public static int currentSig;
+
   // Commands
   public static DriveCommand driveCommand;
   public static TrackBallCommand trackBallCommand;
@@ -132,7 +136,7 @@ public class RobotContainer {
   public static AutoBallPickupCommand autoBallPickupCommand;
   public static DriveDistanceCommand driveDistanceCommand;
   public static TurnAngleCommand turnAngleCommand;
-  public static AutonomousCommandGroup autonomousCommandGroup;
+  // public static FullAutonParalellCommandGroup autonomousCommandGroup;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
 
@@ -224,11 +228,11 @@ public class RobotContainer {
         // On Red Alliance
         Constants.BALL_PROFILE = Constants.RED_BALL_PROFILE;
       } else {
-        // INVALID
+        // INVALID; we guess blue
         Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
       }
     } else {
-      // FMS Not attached
+      // FMS Not attached; we guess blue
       Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
     }
 
@@ -249,13 +253,12 @@ public class RobotContainer {
     autoBallPickupCommand = new AutoBallPickupCommand();
     driveDistanceCommand = new DriveDistanceCommand(100000);
     turnAngleCommand = new TurnAngleCommand(90);
-    autonomousCommandGroup = new AutonomousCommandGroup();
     commandList = new ArrayList<Command>();
     commandList.add(driveCommand);
     commandList.add(driveDistanceCommand);
     commandList.add(turnAngleCommand);
     commandList.add(trackBallWithPixyCommand);
-    commandList.add(autonomousCommandGroup);
+    //commandList.add(autonomousCommandGroup);
     // commandList.add(aimTurretTowardsTarget);
     // commandList.add(shootBallCommand);
     // commandList.add(teleopBallIntakeCommand);
@@ -286,7 +289,7 @@ public class RobotContainer {
     button6.whenPressed(driveDistanceCommand);
     button7.whenPressed(turnAngleCommand);
     button8.whenPressed(aimTurretTowardsTargetZach);
-    button9.whenPressed(autonomousCommandGroup);
+    //button9.whenPressed(autonomousCommandGroup);
     
 
 
@@ -305,7 +308,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return new FullAutonParalellCommandGroup();
   }
 
   /**

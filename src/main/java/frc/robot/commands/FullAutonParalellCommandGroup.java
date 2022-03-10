@@ -4,19 +4,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import PursellJaques.AutonOrientation;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousCommandGroup extends SequentialCommandGroup {
-  /** Creates a new AutonomousCommandGroup. */
-  public AutonomousCommandGroup() {
+public class FullAutonParalellCommandGroup extends ParallelCommandGroup {
+  /** Creates a new FullAutonParalellCommandGroup. */
+  public FullAutonParalellCommandGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-     new AimTurretTowardsTargetZach()
+      new AutonomousCommandGroupSides(AutonOrientation.LEFT),
+      new AimTurretTowardsTarget(),
+      new ShootBallCommand(20000)
     );
   }
 }

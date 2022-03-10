@@ -50,6 +50,7 @@ public class ShootBallCommand extends CommandBase {
       double bottomMotorPower = RobotContainer.bottomMotorTreeMap.getInterpolatedKey(ty);
       // Set motor speeds
       RobotContainer.turret.setShooterSpeeds(topMotorPower, bottomMotorPower);
+      
     }
   }
 
