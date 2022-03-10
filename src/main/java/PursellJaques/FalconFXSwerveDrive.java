@@ -111,6 +111,55 @@ public class FalconFXSwerveDrive {
         }
     }
 
+    public void driveWithProfiledAnglePID(double x, double y, double z, double deadZone) {
+        if (Math.abs(x) < deadZone && Math.abs(y) < deadZone && deadZone > Math.abs(z)) {
+            for (FalconFXSwerveModule module : swerveModules) {
+                module.stopMotion();
+            }
+        } else {
+            Vector[] driveVectors = new Vector[swerveModules.length];
+            int index = 0;
+
+            // Determine max vector length
+            // System.out.println("(" + x + ", " + y + ", " + z + ")");
+
+            double maxLength = 1;
+            for(FalconFXSwerveModule swerveModule: swerveModules){
+                Vector translationVector = new Vector(x, y);
+                Vector rotational = swerveModule.perpendicular.scalarMultiplication(z);
+                double rotateX = rotational.getComponents()[0];
+                double rotateY = rotational.getComponents()[1];
+                rotational = new Vector(rotateX, rotateY * -1);
+                Vector driveVector = translationVector.add(rotational);
+                driveVectors[index] = driveVector;
+
+                if(driveVector.getMagnitude() > maxLength){
+                    maxLength = driveVector.getMagnitude();
+                }
+
+                index ++;
+
+                // Printouts
+
+                // System.out.println("Translational Vector: " + translationVector + ", Rotational Vector: " + rotational);
+                // System.out.println("Translational Vector: " + translationVector);
+                // System.out.println("Rotational Vector: " + rotational);
+                // System.out.println("Drive vector: " + driveVector);
+            }
+
+            // Drive modules with scaled vectors
+
+            index = 0;
+            for(FalconFXSwerveModule swerveModule: swerveModules){
+            Vector driveVector = driveVectors[index];
+            driveVector = driveVector.scalarMultiplication(1 / maxLength);
+
+                swerveModule.driveWithProfiledMotion(driveVector);
+                index ++;
+            }
+        }
+    }
+
     /**
      * 
      * @param x

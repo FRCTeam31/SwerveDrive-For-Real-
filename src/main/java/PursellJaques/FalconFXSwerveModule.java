@@ -10,11 +10,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+
 
 /** Add your docs here. */
 public class FalconFXSwerveModule {
@@ -24,6 +27,7 @@ public class FalconFXSwerveModule {
     public SlewRateLimiter driveRateLimiter;
 
     // Angle Variables
+    public ProfiledPIDController profiledAngleController; // a pid class that more smoothly gets to a setpoint
     public double angleAlignmentConstant; 
     public WPI_TalonSRX angleMotor;
     public PIDController anglePIDController;
@@ -68,6 +72,16 @@ public class FalconFXSwerveModule {
         angleAlignmentConstant = Double.parseDouble(RobotContainer.alignmentConstants.getProperty(name, "0.0"));
         System.out.println("THE ANGLE ALIGNMENT CONSTANTS ARE: " + angleAlignmentConstant);
         angleRateLimiter = new SlewRateLimiter(Constants.SWERVE_DRIVE_ANGLE_SLEW_RATE_LIMTER);
+        profiledAngleController = new ProfiledPIDController(
+            Constants.SWERVE_DRIVE_PROFILED_ANGLE_KP, 
+            Constants.SWERVE_DRIVE_PROFILED_ANGLE_KI,
+            Constants.SWERVE_DRIVE_PROFILED_ANGLE_KD,
+            new TrapezoidProfile.Constraints(
+                Constants.SWERVE_DRIVE_TRAPEZOIDAL_PROFILE_MAX_OMEGA,
+                Constants.SWERVE_DRIVE_TRAPEZOIDAL_PROFILE_MAX_ALPHA
+            )
+        );
+        profiledAngleController.enableContinuousInput(-0.5, 0.5);
         
         // Vectors
         this.position = position;
@@ -82,6 +96,39 @@ public class FalconFXSwerveModule {
 
         // Name
         this.name = name;
+    }
+
+
+    /**
+     * 
+     */
+    public void driveWithProfiledMotion(Vector input) {
+         // Break vector into r, theta
+         double r = driveRateLimiter.calculate(input.getMagnitude()); // Power to give to motor from [0 to 1] 
+         double theta = input.getTheta();
+         // Drive angle motor
+         double currentAnglePosition = (((angleEncoder.getVoltage() + angleAlignmentConstant) % 5) - 2.5) / 5;  // Will return a value between [-0.5, 0.5] rotations
+         /*
+         We don't know where the shaft encoder will start in its cycle of -5V to +5V
+         This line ensures that when the code starts whatever value that angleEncoder gives
+         will be shifted half a rotation in the counter-clockwise direction and bound by [-0.5, 0.5]
+         */
+         double thetaToRotations = theta / 360; // Will return a value between [-0.5, 0.5] rotations
+         
+         // Scale magnitude by Cos(difference between current and target) so that it powers less when
+         // facing the wrong direction
+         double angle_difference = (thetaToRotations - currentAnglePosition) * 2 * Math.PI; // Difference of angles in radians
+         r *= Math.cos(angle_difference);
+ 
+         // Drive speed motor with output r
+         driveMotor.set(ControlMode.Velocity, r * Constants.FALCON_MAX_SPEED);
+         angleMotor.set(profiledAngleController.calculate(currentAnglePosition, thetaToRotations)); // - thetaToRotations because encoder has negative in the clockwise direction
+ 
+         // Printouts
+         // System.out.println("(" + r * Constants.FALCON_MAX_SPEED + ", " + driveMotor.getSelectedSensorVelocity() + ")");
+         // System.out.println("Current Rotation: " + currentAnglePosition + ", Target Rotation: " + thetaToRotations + ", Theta: " + theta);
+         SmartDashboard.putNumber("MODULE ANGLE", currentAnglePosition);
+         // System.out.println(currentAnglePosition);
     }
 
     /**

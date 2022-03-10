@@ -44,6 +44,11 @@ public final class Constants {
     public static double ANGLE_KP = 7;
     public static double ANGLE_KI = 1;
     public static double ANGLE_KD = 0;
+    public static double SWERVE_DRIVE_PROFILED_ANGLE_KP = 1.0/90.0;
+    public static double SWERVE_DRIVE_PROFILED_ANGLE_KI = 0.0;
+    public static double SWERVE_DRIVE_PROFILED_ANGLE_KD = 0.0;
+    public static double SWERVE_DRIVE_TRAPEZOIDAL_PROFILE_MAX_OMEGA = 720.0;
+    public static double SWERVE_DRIVE_TRAPEZOIDAL_PROFILE_MAX_ALPHA = 720.0;
     // NEO drive PID
     public static double DRIVE_KP = 0.0002;
     public static double DRIVE_KI = 0;
@@ -151,6 +156,7 @@ public final class Constants {
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION = 10;
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE = 0.1; // Tolerance as a percent
     public static final int DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER = 10; // Length of loops that robot needs to be inside target distance
+    
 
     // Track ball command constants (OUTDATED COMMAND)
     public static double TRACK_BALL_COMMAND_DISTANCE_P = 0.01;
@@ -219,6 +225,7 @@ public final class Constants {
     public static  int ACCECPTABLE_NO_TARGET_COUNT = 10; // The max number of frames with not targets for the code to predict ball position
     public static  double TRACK_BALL_WITH_PIXY_ALPHA = 0.8; // The constant that affects how much weight we give to the past values [0 - 1], 
     // High values means the new value has more weight, low values mean the owld value has more weight
+    
 
 
 

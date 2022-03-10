@@ -1,0 +1,39 @@
+{
+  "HALProvider": {
+    "Analog Inputs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "Other Devices": {
+      "Talon FX[1]": {
+        "header": {
+          "open": true
+        }
+      }
+    },
+    "RoboRIO": {
+      "5V Rail": {
+        "open": true
+      },
+      "window": {
+        "visible": true
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ExampleSubsystem": "Subsystem",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/navX-Sensor[2]": "Gyro"
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
+  }
+}
