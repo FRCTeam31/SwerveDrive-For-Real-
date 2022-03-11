@@ -127,6 +127,9 @@ public final class Constants {
     public static  Integer AIM_TURRET_TOWARDS_TARGET_COMMNAND_MAX_NO_TARGET_COUNT = 10;
     public static  double AIM_TURRET_TOWARDS_TARGET_COMMAND_ALPHA = 0.8;
 
+    // Climbing Mechanism
+    public static  int CLIMBING_MOTOR_CAN_ID = 0;
+
     // Joystick Constants
     public static int JOYSTICK1_PORT = 1;
     public static int JOYSTICK2_PORT = 2;
@@ -156,7 +159,9 @@ public final class Constants {
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION = Constants.FALCON_MAX_SPEED / 20.0;
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE = 0.1; // Tolerance as a percent
     public static final int DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER = 10; // Length of loops that robot needs to be inside target distance
-    
+
+    // Climbing Command Constants
+    public static  double SAFE_CLIMBING_SPEED = 0.6;
 
     // Track ball command constants (OUTDATED COMMAND)
     public static double TRACK_BALL_COMMAND_DISTANCE_P = 0.01;

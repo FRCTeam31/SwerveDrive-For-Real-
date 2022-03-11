@@ -22,6 +22,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 import PursellJaques.ArcadeDrive;
+import PursellJaques.ClimbingMechanism;
 import PursellJaques.FalconFXSwerveDrive;
 import PursellJaques.FalconFXSwerveModule;
 import PursellJaques.InterpolatingTreeMap;
@@ -44,6 +45,7 @@ import frc.robot.commands.BallSuckCommand;
 import frc.robot.commands.CalibrateSwerve;
 import frc.robot.commands.CancelAllDriveBaseCommandsCommand;
 import frc.robot.commands.CancelAllShooterCommandsCommand;
+import frc.robot.commands.ClimbingCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.DriveToDistanceWithMotionProfileCommand;
@@ -100,6 +102,9 @@ public class RobotContainer {
   public static FalconFXSwerveDrive swerveDrive;
   public static Properties alignmentConstants;
 
+  // Climbing Variables
+  public static ClimbingMechanism climbingMechanism;
+
   // Differiental Drive Variables
   public static ArcadeDrive arcadeDrive;
   
@@ -141,6 +146,7 @@ public class RobotContainer {
   public static ShootLowGoalCommand shootLowGoalCommand;
   public CancelAllDriveBaseCommandsCommand cancelAllDriveBaseCommandsCommand;
   public CancelAllShooterCommandsCommand cancelAllShooterCommandsCommand;
+  public ClimbingCommand climbingCommand;
   public static FullAutonParalellCommandGroup fullAutonParalellCommandGroup;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
@@ -215,6 +221,9 @@ public class RobotContainer {
       topMotorTreeMap.put(Constants.TREE_MAP_KEYS[i], Constants.TOP_MOTOR_TREE_MAP_VALUES[i]);
     }
 
+    // Climbing Mechanism
+    climbingMechanism = new ClimbingMechanism(Constants.CLIMBING_MOTOR_CAN_ID);
+
     // Intake Motor
     intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR_CID);
     raiseIntakeMotor = new WPI_TalonSRX(Constants.RAISE_INTAKE_MOTOR_CID);
@@ -266,12 +275,13 @@ public class RobotContainer {
     shooterCommands.add(teleopTurnTurretCommand);
     shootLowGoalCommand = new ShootLowGoalCommand();
     shooterCommands.add(shootLowGoalCommand);
-    driveToDistanceWithMotionProfileCommand = new DriveToDistanceWithMotionProfileCommand(1);
+    driveToDistanceWithMotionProfileCommand = new DriveToDistanceWithMotionProfileCommand(1, 3);
     driveBaseCommands.add(driveToDistanceWithMotionProfileCommand);
-    turnAngleCommand = new TurnAngleCommand(45);
+    turnAngleCommand = new TurnAngleCommand(45, 4);
     driveBaseCommands.add(turnAngleCommand);
     fullAutonParalellCommandGroup = new FullAutonParalellCommandGroup();
     driveBaseCommands.add(fullAutonParalellCommandGroup);
+    climbingCommand = new ClimbingCommand();
 
     // Test Commands
     // swerveModuleTestCommand = new SwerveModuleTestCommand(testModule);
@@ -314,7 +324,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new FullAutonParalellCommandGroup();
     }
 
   /**

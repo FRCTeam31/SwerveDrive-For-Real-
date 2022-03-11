@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import PursellJaques.FalconFXSwerveModule;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -25,12 +26,14 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
   public double targetDistance;
   public boolean done;
   public int atTargetDistanceCounter;
+  public double maxTime;
+  public Timer timer;
 
 
   /** Creates a new DriveToDistanceWithMotionProfileCommand. 
    * @param targetDistance the distance you want the robot to travel in meters
   */
-  public DriveToDistanceWithMotionProfileCommand(double targetDistance) {
+  public DriveToDistanceWithMotionProfileCommand(double targetDistance, double maxTime) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.targetDistance = targetDistance * Constants.SWERVE_DRIVE_METERS_TO_TICKS;
     // Create a pid controller that also uses a trapezoidal profile
@@ -40,7 +43,8 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
                                                       new TrapezoidProfile.Constraints(Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_MAX_VELOCITY, 
                                                                           Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION),
                                                       Constants.ROBOT_LOOPING_PERIOD);
-    
+    this.maxTime = maxTime;
+    timer = new Timer();
   }
 
   // Called when the command is initially scheduled.
@@ -55,6 +59,8 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
     atTargetDistanceCounter = 0;
     SmartDashboard.putString("Current Command", "Drive Distance Command");
 
+    timer.reset();
+    timer.start();
   } 
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -74,6 +80,9 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
     if(Math.abs(getCurrentDistance()) > targetDistance){
       done = true;
       this.end(true);
+    }
+    if(timer.get() > maxTime){
+      done = true;
     }
     done = atTargetDistanceCounter > Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER;
 
