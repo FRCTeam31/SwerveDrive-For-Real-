@@ -121,9 +121,9 @@ public final class Constants {
     public static double TURRET_ANGLE_MOTOR_KP = 1;
     public static double TURRET_ANGLE_MOTOR_KI = 1;
     public static double TURRET_ANGLE_MOTOR_KD = 3;
-    public static double[] TREE_MAP_KEYS =    {-18.4, -16, -14.7, -12.8, -10, -7.7, -6, 0, 6, 7.4, 14};
-    public static double[] TOP_MOTOR_TREE_MAP_VALUES = {-4500, -9750, -9750, -9750, -6937, -4125, -3375, -2812, -2812, -2062, 0};
-    public static double[] BOTTOM_MOTOR_TREE_VALUES = {-12000, -10687.5, -11437, -11437, -11437, -9937, -9937, -9937, -9937, -9937, -13500};
+    public static double[] TREE_MAP_KEYS =    {-24.5, -22.5, -20, -18.4, -16, -14.7, -12.8, -10, -7.7, -6, 0, 6, 7.4, 14};
+    public static double[] TOP_MOTOR_TREE_MAP_VALUES = {-4875, -4500, -3562, -4500, -9750, -9750, -9750, -6937, -4125, -3375, -2812, -2812, -2062, 0};
+    public static double[] BOTTOM_MOTOR_TREE_VALUES = {-13875, -12937, -13875, -12000, -10687.5, -11437, -11437, -11437, -9937, -9937, -9937, -9937, -9937, -13500};
     public static  Integer AIM_TURRET_TOWARDS_TARGET_COMMNAND_MAX_NO_TARGET_COUNT = 10;
     public static  double AIM_TURRET_TOWARDS_TARGET_COMMAND_ALPHA = 0.8;
 
