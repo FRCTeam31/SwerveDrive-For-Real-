@@ -25,7 +25,6 @@ public class FieldOrientatedDriveWithTargetingCommand extends CommandBase {
   public void initialize() {
     anglePID.reset(0);
     prevAngle = RobotContainer.navX.getAngle();
-    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

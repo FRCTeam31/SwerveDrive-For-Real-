@@ -4,6 +4,8 @@
 
 package PursellJaques;
 
+import java.time.chrono.ThaiBuddhistEra;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
@@ -122,12 +124,15 @@ public class FalconFXSwerveModule {
  
          // Drive speed motor with output r
          driveMotor.set(ControlMode.Velocity, r * Constants.FALCON_MAX_SPEED);
-         angleMotor.set(profiledAngleController.calculate(currentAnglePosition, thetaToRotations)); // - thetaToRotations because encoder has negative in the clockwise direction
+        // driveMotor.stopMotor();
+        angleMotor.set(profiledAngleController.calculate(currentAnglePosition, thetaToRotations)); // - thetaToRotations because encoder has negative in the clockwise direction
  
          // Printouts
          // System.out.println("(" + r * Constants.FALCON_MAX_SPEED + ", " + driveMotor.getSelectedSensorVelocity() + ")");
          // System.out.println("Current Rotation: " + currentAnglePosition + ", Target Rotation: " + thetaToRotations + ", Theta: " + theta);
          SmartDashboard.putNumber("MODULE ANGLE", currentAnglePosition);
+         SmartDashboard.putNumber("Target rotation", thetaToRotations);
+         SmartDashboard.putNumber("Progiled target", profiledAngleController.calculate(currentAnglePosition, thetaToRotations));
          // System.out.println(currentAnglePosition);
     }
 

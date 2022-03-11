@@ -28,7 +28,6 @@ public class AimTurretTowardsTargetZach extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.cancelAllExcept(this);
     System.out.println("AIM TURRET TOWARDS TARGET COMMAND ACTIVE");
     prevX = 0.0;
     prevX2 = 0.0;

@@ -37,19 +37,22 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.AimAtTargetCommand;
-import frc.robot.commands.AimTurretTowardsTarget;
 import frc.robot.commands.AimTurretTowardsTargetZach;
 import frc.robot.commands.AutoBallPickupCommand;
 import frc.robot.commands.AutonomousCommandGroupSides;
 import frc.robot.commands.BallSuckCommand;
 import frc.robot.commands.CalibrateSwerve;
+import frc.robot.commands.CancelAllDriveBaseCommandsCommand;
+import frc.robot.commands.CancelAllShooterCommandsCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistanceCommand;
+import frc.robot.commands.DriveToDistanceWithMotionProfileCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FullAutonParalellCommandGroup;
 import frc.robot.commands.RaiseIntakeCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallCommand;
+import frc.robot.commands.ShootLowGoalCommand;
 import frc.robot.commands.SwerveModuleTestCommand;
 import frc.robot.commands.TeleopBallIntakeCommand;
 import frc.robot.commands.TeleopTurnTurretCommand;
@@ -117,7 +120,6 @@ public class RobotContainer {
   public static AHRS navX = new AHRS(SerialPort.Port.kUSB);
 
   // Alliance Signature
-  public static int currentSig;
 
   // Commands
   public static DriveCommand driveCommand;
@@ -125,18 +127,21 @@ public class RobotContainer {
   public static ShootBallCommand shootBallCommand;
   public static TeleopBallIntakeCommand teleopBallIntakeCommand;
   public static CalibrateSwerve configureWheelAlignments;
-  public static AimTurretTowardsTarget aimTurretTowardsTarget;
   public static TrackBallWithPixyCommand trackBallWithPixyCommand;
   public static SetShooterSpeedCommand setShooterSpeedCommand;
-  public static ArrayList<Command> commandList;
+  public static ArrayList<Command> shooterCommands;
+  public static ArrayList<Command> driveBaseCommands;
   public static AimTurretTowardsTargetZach aimTurretTowardsTargetZach;
   public static TeleopTurnTurretCommand teleopTurnTurretCommand;
   public static RaiseIntakeCommand raiseIntakeCommand;
   public static BallSuckCommand ballSuckCommand;
   public static AutoBallPickupCommand autoBallPickupCommand;
-  public static DriveDistanceCommand driveDistanceCommand;
+  public static DriveToDistanceWithMotionProfileCommand driveToDistanceWithMotionProfileCommand;
   public static TurnAngleCommand turnAngleCommand;
-  // public static FullAutonParalellCommandGroup autonomousCommandGroup;
+  public static ShootLowGoalCommand shootLowGoalCommand;
+  public CancelAllDriveBaseCommandsCommand cancelAllDriveBaseCommandsCommand;
+  public CancelAllShooterCommandsCommand cancelAllShooterCommandsCommand;
+  public static FullAutonParalellCommandGroup fullAutonParalellCommandGroup;
   // Test Commands
   // SwerveModuleTestCommand swerveModuleTestCommand;
 
@@ -151,7 +156,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Create swerve modules
-
     try {
       alignmentConstants = new Properties();
       alignmentConstants.load(new FileInputStream(Constants.ALIGNMENT_FILE_PATH));
@@ -179,7 +183,7 @@ public class RobotContainer {
     // Constants.TML_AMCID, Constants.TML_EC, Constants.TML_P);
 
     // Create FalconFXSwerveDrive
-    FalconFXSwerveModule[] swerveModules = {frontLeft, frontRight, backLeft, backRight};
+    FalconFXSwerveModule[] swerveModules = {frontRight, frontLeft, backLeft, backRight};
     swerveDrive = new FalconFXSwerveDrive(swerveModules);
 
     //  Create Differential Drive
@@ -219,14 +223,16 @@ public class RobotContainer {
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
     pixy = new PixyVisionSystem();
 
-    // Limelight Controls
+    // // Limelight Controls
     if (DriverStation.isFMSAttached()) {
       if (DriverStation.getAlliance() == Alliance.Blue) {
         // On Blue Alliance
         Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
+        System.out.println("BLUE TEAM");
       } else if (DriverStation.getAlliance() == Alliance.Red) {
         // On Red Alliance
         Constants.BALL_PROFILE = Constants.RED_BALL_PROFILE;
+        System.out.println("RED TEAM");
       } else {
         // INVALID; we guess blue
         Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
@@ -237,33 +243,35 @@ public class RobotContainer {
     }
 
     // Commands
+    cancelAllDriveBaseCommandsCommand = new CancelAllDriveBaseCommandsCommand();
+    cancelAllShooterCommandsCommand = new CancelAllShooterCommandsCommand();
+    driveBaseCommands = new ArrayList<Command>();
+    shooterCommands = new ArrayList<Command>();
+
     driveCommand = new DriveCommand();
-    trackBallCommand = new TrackBallCommand();
-    aimTurretTowardsTarget = new AimTurretTowardsTarget();
+    driveBaseCommands.add(driveCommand);    
     shootBallCommand = new ShootBallCommand(1000);
+    shooterCommands.add(shootBallCommand);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
-    trackBallWithPixyCommand = new TrackBallWithPixyCommand(Pixy2CCC.CCC_SIG1);
+    trackBallWithPixyCommand = new TrackBallWithPixyCommand(Constants.BALL_PROFILE);
+    driveBaseCommands.add(trackBallWithPixyCommand);
+    shooterCommands.add(trackBallWithPixyCommand);
     setShooterSpeedCommand = new SetShooterSpeedCommand();
+    shooterCommands.add(setShooterSpeedCommand);
     aimTurretTowardsTargetZach = new AimTurretTowardsTargetZach();
+    shooterCommands.add(aimTurretTowardsTargetZach);
     raiseIntakeCommand = new RaiseIntakeCommand();
     teleopTurnTurretCommand = new TeleopTurnTurretCommand();
-    raiseIntakeCommand = new RaiseIntakeCommand();
-    ballSuckCommand = new BallSuckCommand(1000, 1000);
-    autoBallPickupCommand = new AutoBallPickupCommand();
-    driveDistanceCommand = new DriveDistanceCommand(100000);
-    turnAngleCommand = new TurnAngleCommand(90);
-    commandList = new ArrayList<Command>();
-    commandList.add(driveCommand);
-    commandList.add(driveDistanceCommand);
-    commandList.add(turnAngleCommand);
-    commandList.add(trackBallWithPixyCommand);
-    //commandList.add(autonomousCommandGroup);
-    // commandList.add(aimTurretTowardsTarget);
-    // commandList.add(shootBallCommand);
-    // commandList.add(teleopBallIntakeCommand);
-    // commandList.add(configureWheelAlignments);
-
+    shooterCommands.add(teleopTurnTurretCommand);
+    shootLowGoalCommand = new ShootLowGoalCommand();
+    shooterCommands.add(shootLowGoalCommand);
+    driveToDistanceWithMotionProfileCommand = new DriveToDistanceWithMotionProfileCommand(1);
+    driveBaseCommands.add(driveToDistanceWithMotionProfileCommand);
+    turnAngleCommand = new TurnAngleCommand(45);
+    driveBaseCommands.add(turnAngleCommand);
+    fullAutonParalellCommandGroup = new FullAutonParalellCommandGroup();
+    driveBaseCommands.add(fullAutonParalellCommandGroup);
 
     // Test Commands
     // swerveModuleTestCommand = new SwerveModuleTestCommand(testModule);
@@ -282,25 +290,23 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     button1.whenPressed(driveCommand);
+    // button2.whenPressed(teleopBallIntakeCommand);
     button2.whenPressed(teleopTurnTurretCommand);
-    button3.whenPressed(teleopBallIntakeCommand);
-    button4.whenPressed(trackBallWithPixyCommand);
-    button5.whenPressed(configureWheelAlignments);
-    button6.whenPressed(driveDistanceCommand);
-    button7.whenPressed(turnAngleCommand);
-    button8.whenPressed(aimTurretTowardsTargetZach);
-    //button9.whenPressed(autonomousCommandGroup);
+    // button3.whenPressed(shootBallCommand);
+    button3.whenPressed(configureWheelAlignments);
+    button4.whenPressed(setShooterSpeedCommand);
+    button5.whenPressed(aimTurretTowardsTargetZach);  
+    button6.whenPressed(cancelAllDriveBaseCommandsCommand);
+    button7.whenPressed(cancelAllShooterCommandsCommand);
+    button8.whenPressed(turnAngleCommand);
+    // button9.whenPressed(shootLowGoalCommand);
+    button9.whenPressed(trackBallWithPixyCommand);
+    button10.whenPressed(fullAutonParalellCommandGroup);
     
-
-
-
-
     
-    // button4.whenPressed(shootBallCommand);
   }
 
-
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -308,8 +314,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new FullAutonParalellCommandGroup();
-  }
+    return null;
+    }
 
   /**
    * Turrn of the Drive command
@@ -326,13 +332,15 @@ public class RobotContainer {
   /**
    * Cancels all commands except the one passed as the parameter (assuming that all command are inside of commandList)
    */
-  public static void cancelAllExcept(Command canceler) {
-    int identity = commandList.indexOf(canceler);
+  public static void cancelAllShooterCommands() {
+    for (int i = 0; i < shooterCommands.size(); i++) {
+      shooterCommands.get(i).cancel();
+    }
+  }
 
-    for (int i = 0; i < commandList.size(); i++) {
-      if (i != identity) {
-        commandList.get(i).cancel();
-      }
+  public static void cancelAllDriveBaseCommands(){
+    for (int i = 0; i < driveBaseCommands.size(); i++){
+      driveBaseCommands.get(i).cancel();
     }
   }
 }

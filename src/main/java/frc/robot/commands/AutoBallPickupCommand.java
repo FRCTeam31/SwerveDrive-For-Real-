@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC;
 
@@ -17,7 +18,7 @@ public class AutoBallPickupCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TrackBallWithPixyCommand(RobotContainer.currentSig),
+      new TrackBallWithPixyCommand(Constants.BALL_PROFILE),
       new BallSuckCommand(1000, 1000)
     );
   }
@@ -25,7 +26,7 @@ public class AutoBallPickupCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TrackBallWithPixyCommand(Pixy2CCC.CCC_SIG1),
+      new TrackBallWithPixyCommand(Constants.BALL_PROFILE),
       new BallSuckCommand(driveTime, suckTime)
     );
   }

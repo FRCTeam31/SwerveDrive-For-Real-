@@ -57,6 +57,7 @@ public class TrackBallWithPixyCommand extends CommandBase {
     prevY = avgY;
     prevX2 = prevX;
     prevY2 = prevY;
+    SmartDashboard.putString("Current Command", "Track Ball With Pixy");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -119,6 +119,9 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("FALCON TEMP", RobotContainer.turret.turnShooterMotor.getTemperature());
     // RobotContainer.pixy.displayBlock(RobotContainer.pixy.getBiggestBlock(Constants.BLUE_BALL_PIXY_PROFILE));
     // RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED, RobotContainer.joystick.getRawAxis(3) * Constants.FALCON_MAX_SPEED);
+    SmartDashboard.putNumber("Limelight X", RobotContainer.limelightTable.getEntry("tx").getDouble(0.0));
+    SmartDashboard.putNumber("Limelight Y", RobotContainer.limelightTable.getEntry("ty").getDouble(0.0));
+    SmartDashboard.putNumber("Ball Profile", Constants.BALL_PROFILE);
   }
 
   @Override

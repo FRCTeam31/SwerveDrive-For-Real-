@@ -21,8 +21,6 @@ public class DriveCommand extends CommandBase {
   @Override
   public void initialize() {
     SmartDashboard.putString("Drive Command", "ACTIVE");
-    RobotContainer.cancelAllExcept(this);
-    RobotContainer.driveDistanceCommand.cancel();
     // RobotContainer.swerveDrive.setNeutralMode(NeutralMode.Coast);
   }
 
@@ -32,8 +30,8 @@ public class DriveCommand extends CommandBase {
     // X is left to right [-1, 1], Y is front to back [1, -1], Z is CCW to CW [-1, 1]
     // RobotContainer.swerveDrive.driveWithDeadZone(Math.pow(RobotContainer.joystick.getX(), 3) * Math.signum(RobotContainer.joystick.getX()), Math.pow(RobotContainer.joystick.getY(), 3) * Math.signum(RobotContainer.joystick.getY()), Math.pow(RobotContainer.joystick.getRawAxis(3), 3) * Math.signum(RobotContainer.joystick.getRawAxis(3)), 0.05);
     // RobotContainer.swerveDrive.fieldOrientedDriveWithDeadZone(Math.pow(RobotContainer.joystick.getX(), 2) * Math.signum(RobotContainer.joystick.getX()), Math.pow(RobotContainer.joystick.getY(), 2) * Math.signum(RobotContainer.joystick.getY()), Math.pow(RobotContainer.joystick.getRawAxis(3), 2) * Math.signum(RobotContainer.joystick.getRawAxis(3)), 0.1);
-    RobotContainer.swerveDrive.driveWithDeadZone(Math.pow(RobotContainer.joystick.getX(), 3), Math.pow(RobotContainer.joystick.getY(), 3), Math.pow(RobotContainer.joystick.getRawAxis(3), 3), 0.05);
-
+    // RobotContainer.swerveDrive.driveWithDeadZone(Math.pow(RobotContainer.joystick.getX(), 3), Math.pow(RobotContainer.joystick.getY(), 3), Math.pow(RobotContainer.joystick.getRawAxis(3), 3), 0.05);
+    RobotContainer.swerveDrive.driveWithProfiledAnglePID(0.5 * Math.pow(RobotContainer.joystick.getX(), 3), 0.5 * Math.pow(RobotContainer.joystick.getY(), 3), 0.5 * Math.pow(RobotContainer.joystick.getRawAxis(3), 3), 0.05);
     //RobotContainer.swerveDrive.fieldOrientedDriveWithDeadZone(RobotContainer.joystick.getX(), -1 * RobotContainer.joystick.getY(), RobotContainer.joystick.getZ(), 0.1);
   }
 

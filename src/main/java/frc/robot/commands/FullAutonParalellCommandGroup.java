@@ -17,8 +17,8 @@ public class FullAutonParalellCommandGroup extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutonomousCommandGroupSides(AutonOrientation.LEFT),
-      new AimTurretTowardsTarget(),
-      new ShootBallCommand(20000)
-    );
+      new AimTurretTowardsTargetZach(),
+      new ShootBallCommand(1)
+      );
   }
 }

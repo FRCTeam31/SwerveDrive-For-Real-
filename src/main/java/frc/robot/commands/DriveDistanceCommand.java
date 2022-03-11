@@ -35,8 +35,9 @@ public class DriveDistanceCommand extends CommandBase {
     }
     distancePIDController.reset(0);
     counter = 0;
-    RobotContainer.cancelAllExcept(this);
     RobotContainer.swerveDrive.setNeutralMode(NeutralMode.Brake);
+    SmartDashboard.putString("Current Command", "Drive Distance");
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

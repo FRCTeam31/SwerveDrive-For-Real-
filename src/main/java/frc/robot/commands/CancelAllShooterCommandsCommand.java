@@ -4,35 +4,24 @@
 
 package frc.robot.commands;
 
-import PursellJaques.FalconFXSwerveModule;
-import PursellJaques.Vector;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class SwerveModuleTestCommand extends CommandBase {
-  // Instance Variables
-  FalconFXSwerveModule swerveModule;
-
-  /** Creates a new SwerveModuleTestCommand. */
-  public SwerveModuleTestCommand(FalconFXSwerveModule sm) {
+public class CancelAllShooterCommandsCommand extends CommandBase {
+  /** Creates a new CancelAllShooterCommandsCommand. */
+  public CancelAllShooterCommandsCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    swerveModule = sm;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    RobotContainer.cancelAllShooterCommands();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    Vector input = new Vector(RobotContainer.joystick.getX(), 1 * RobotContainer.joystick.getY());
-    swerveModule.drive(input);
-
-    System.out.println("(X: " + RobotContainer.joystick.getX() + " Y: " + -1 * RobotContainer.joystick.getY() + " Encoder: " + swerveModule.angleEncoder.getVoltage() + ")");
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -41,6 +30,6 @@ public class SwerveModuleTestCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

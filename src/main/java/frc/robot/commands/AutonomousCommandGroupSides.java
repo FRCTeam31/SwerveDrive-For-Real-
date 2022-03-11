@@ -29,19 +29,11 @@ public class AutonomousCommandGroupSides extends SequentialCommandGroup {
     
 
     addCommands(
-      new AutoBallPickupCommand(),
-      // first ball sucked
+      new BallSuckCommand(1000, 0),
       new TurnAngleCommand(180),
-      new BallSuckCommand(1000, 0), // shooting
-      // shot first and preloaded balls
-      new TurnAngleCommand(-direction * 90),
-      new DriveDistanceCommand(2.0),
       new AutoBallPickupCommand(),
-    // second ball picked up
-      new TurnAngleCommand(direction * 90),
-      new BallSuckCommand(1000, 0)// shooting
-      // second ball shot; 3 balls total
-      
+      new TurnAngleCommand(180),
+      new BallSuckCommand(1000, 0)
     );
   }
 }

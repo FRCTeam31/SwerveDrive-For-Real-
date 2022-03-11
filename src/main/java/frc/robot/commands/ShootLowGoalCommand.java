@@ -4,34 +4,24 @@
 
 package frc.robot.commands;
 
-import PursellJaques.FalconFXSwerveModule;
-import PursellJaques.Vector;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class SwerveModuleTestCommand extends CommandBase {
-  // Instance Variables
-  FalconFXSwerveModule swerveModule;
-
-  /** Creates a new SwerveModuleTestCommand. */
-  public SwerveModuleTestCommand(FalconFXSwerveModule sm) {
+public class ShootLowGoalCommand extends CommandBase {
+  /** Creates a new ShootLowGoalCommand. */
+  public ShootLowGoalCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
-    swerveModule = sm;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Vector input = new Vector(RobotContainer.joystick.getX(), 1 * RobotContainer.joystick.getY());
-    swerveModule.drive(input);
-
-    System.out.println("(X: " + RobotContainer.joystick.getX() + " Y: " + -1 * RobotContainer.joystick.getY() + " Encoder: " + swerveModule.angleEncoder.getVoltage() + ")");
+    RobotContainer.turret.setShooterSpeeds(0.1 * Constants.FALCON_MAX_SPEED, 0.1 * Constants.FALCON_MAX_SPEED);
   }
 
   // Called once the command ends or is interrupted.

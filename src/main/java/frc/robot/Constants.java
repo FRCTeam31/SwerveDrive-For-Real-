@@ -44,7 +44,7 @@ public final class Constants {
     public static double ANGLE_KP = 7;
     public static double ANGLE_KI = 1;
     public static double ANGLE_KD = 0;
-    public static double SWERVE_DRIVE_PROFILED_ANGLE_KP = 1.0/90.0;
+    public static double SWERVE_DRIVE_PROFILED_ANGLE_KP = 10;
     public static double SWERVE_DRIVE_PROFILED_ANGLE_KI = 0.0;
     public static double SWERVE_DRIVE_PROFILED_ANGLE_KD = 0.0;
     public static double SWERVE_DRIVE_TRAPEZOIDAL_PROFILE_MAX_OMEGA = 720.0;
@@ -152,8 +152,8 @@ public final class Constants {
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KP = 1;
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KI = 0;
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_KD = 0;
-    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_MAX_VELOCITY = 10;
-    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION = 10;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_MAX_VELOCITY = Constants.FALCON_MAX_SPEED / 20.0;
+    public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_ACCELERATION = Constants.FALCON_MAX_SPEED / 20.0;
     public static final double DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE = 0.1; // Tolerance as a percent
     public static final int DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER = 10; // Length of loops that robot needs to be inside target distance
     

@@ -29,7 +29,6 @@ public class AimAtTargetCommand extends CommandBase {
     ballCenterPID.reset(0);
     // Turn off driveCommand
     SmartDashboard.putString("Aim At Target Command", "ACTIVE");
-    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -30,7 +30,6 @@ public class ShootBallCommand extends CommandBase {
   public void initialize() {
     this.time = 0;
     // Turn off driveCommand
-    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,8 +45,8 @@ public class ShootBallCommand extends CommandBase {
     else{
       // Valid target
       // Calculate powers with tree maps
-      double topMotorPower = RobotContainer.topMotorTreeMap.getInterpolatedKey(ty);
-      double bottomMotorPower = RobotContainer.bottomMotorTreeMap.getInterpolatedKey(ty);
+      double topMotorPower = 1.1*RobotContainer.topMotorTreeMap.getInterpolatedKey(ty);
+      double bottomMotorPower = 1.1*RobotContainer.bottomMotorTreeMap.getInterpolatedKey(ty);
       // Set motor speeds
       RobotContainer.turret.setShooterSpeeds(topMotorPower, bottomMotorPower);
       

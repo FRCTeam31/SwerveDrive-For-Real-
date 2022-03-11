@@ -23,9 +23,9 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED, RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    RobotContainer.turret.setShooterSpeeds(RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED, RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
     SmartDashboard.putNumber("Top Motor Speed", RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
-    SmartDashboard.putNumber("Bottom Motor Speed", RobotContainer.joystick2.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
+    SmartDashboard.putNumber("Bottom Motor Speed", RobotContainer.joystick.getRawAxis(2) * Constants.FALCON_MAX_SPEED);
 
   }
 

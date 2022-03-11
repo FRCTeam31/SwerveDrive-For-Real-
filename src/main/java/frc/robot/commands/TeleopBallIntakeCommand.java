@@ -18,7 +18,6 @@ public class TeleopBallIntakeCommand extends CommandBase {
   @Override
   public void initialize() {
     SmartDashboard.putString("Ball Intake Command", "ACTIVE");
-    RobotContainer.cancelAllExcept(this);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import PursellJaques.FalconFXSwerveModule;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -52,13 +53,15 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
     RobotContainer.swerveDrive.setNeutralMode(NeutralMode.Brake);
     done = false;
     atTargetDistanceCounter = 0;
+    SmartDashboard.putString("Current Command", "Drive Distance Command");
+
   } 
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double currentPos = getCurrentDistance();
-    RobotContainer.swerveDrive.drive(0.0, distancePIDController.calculate(currentPos, targetDistance), 0.0);
+    RobotContainer.swerveDrive.drive(0.0, 0.2 * distancePIDController.calculate(currentPos, targetDistance), 0.0);
     if(currentPos < targetDistance * (1 + Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE) &&
     currentPos > targetDistance * (1 - Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_TOLERANCE)){
       // Current pos is inside target tolerances
@@ -67,8 +70,16 @@ public class DriveToDistanceWithMotionProfileCommand extends CommandBase {
     else{
       atTargetDistanceCounter = 0;
     }
+
+    if(Math.abs(getCurrentDistance()) > targetDistance){
+      done = true;
+      this.end(true);
+    }
     done = atTargetDistanceCounter > Constants.DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER;
 
+    SmartDashboard.putNumber("Current Robot Pos", currentPos);
+    SmartDashboard.putNumber("Target Power", distancePIDController.calculate(currentPos, targetDistance));
+    SmartDashboard.putNumber("Target Distance", targetDistance);
   }
 
   // Called once the command ends or is interrupted.
