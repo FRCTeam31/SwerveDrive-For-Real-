@@ -31,9 +31,12 @@ public class AutonomousCommandGroupSides extends SequentialCommandGroup {
 
     addCommands(
       new WaitCommand(2),
-      new BallSuckCommand(2000, 2000),
+      new BallSuckCommand(2000, 0),
       new TurnAngleCommand(180, 3),
-      new BallSuckCommand(2000, 0)
+      new TrackBallWithPixyCommand(Constants.BALL_PROFILE, 4),
+      new BallSuckCommand(2000, 1000),
+      new TurnAngleCommand(180, 3),
+      new BallSuckCommand(5000, 0)
     );
   }
 }
