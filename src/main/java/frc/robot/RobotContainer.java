@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AimAtTargetCommand;
 import frc.robot.commands.AimTurretTowardsTargetZach;
 import frc.robot.commands.AutoBallPickupCommand;
@@ -51,7 +52,9 @@ import frc.robot.commands.DriveDistanceCommand;
 import frc.robot.commands.DriveToDistanceWithMotionProfileCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.FullAutonParalellCommandGroup;
+import frc.robot.commands.FullAutonSequentialCommandGroup;
 import frc.robot.commands.RaiseIntakeCommand;
+import frc.robot.commands.Scuff;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallCommand;
 import frc.robot.commands.ShootLowGoalCommand;
@@ -189,7 +192,7 @@ public class RobotContainer {
     // Constants.TML_AMCID, Constants.TML_EC, Constants.TML_P);
 
     // Create FalconFXSwerveDrive
-    FalconFXSwerveModule[] swerveModules = {frontRight, frontLeft, backLeft, backRight};
+    FalconFXSwerveModule[] swerveModules = {frontLeft, frontRight, backLeft, backRight};
     swerveDrive = new FalconFXSwerveDrive(swerveModules);
 
     //  Create Differential Drive
@@ -198,6 +201,7 @@ public class RobotContainer {
     arcadeDrive = new ArcadeDrive(leftDifferentialDrive, rightDifferentialDrive);
 
     // Joystick Controls
+
     joystick = new Joystick(Constants.JOYSTICK1_PORT);
     joystick2 = new Joystick(2);
     button1 = new JoystickButton(joystick, 1);
@@ -233,23 +237,25 @@ public class RobotContainer {
     pixy = new PixyVisionSystem();
 
     // // Limelight Controls
-    if (DriverStation.isFMSAttached()) {
-      if (DriverStation.getAlliance() == Alliance.Blue) {
-        // On Blue Alliance
-        Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
-        System.out.println("BLUE TEAM");
-      } else if (DriverStation.getAlliance() == Alliance.Red) {
-        // On Red Alliance
-        Constants.BALL_PROFILE = Constants.RED_BALL_PROFILE;
-        System.out.println("RED TEAM");
-      } else {
-        // INVALID; we guess blue
-        Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
-      }
-    } else {
-      // FMS Not attached; we guess blue
-      Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
-    }
+    // if (DriverStation.isFMSAttached()) {
+    //   if (DriverStation.getAlliance() == Alliance.Blue) {
+    //     // On Blue Alliance
+    //     Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
+    //     System.out.println("BLUE TEAM");
+    //   } else if (DriverStation.getAlliance() == Alliance.Red) {
+    //     // On Red Alliance
+    //     Constants.BALL_PROFILE = Constants.RED_BALL_PROFILE;
+    //     System.out.println("RED TEAM");
+    //   } else {
+    //     // INVALID; we guess blue
+    //     Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
+    //   }
+    // } else {
+    //   // FMS Not attached; we guess blue
+    //   Constants.BALL_PROFILE = Constants.BLUE_BALL_PROFILE;
+    // }
+    // SmartDashboard.putNumber("Alliance", Constants.BALL_PROFILE);
+    Constants.BALL_PROFILE = Constants.RED_BALL_PIXY_PROFILE;
 
     // Commands
     cancelAllDriveBaseCommandsCommand = new CancelAllDriveBaseCommandsCommand();
@@ -263,7 +269,7 @@ public class RobotContainer {
     shooterCommands.add(shootBallCommand);
     teleopBallIntakeCommand = new TeleopBallIntakeCommand();
     configureWheelAlignments = new CalibrateSwerve();
-    trackBallWithPixyCommand = new TrackBallWithPixyCommand(Constants.BALL_PROFILE);
+    trackBallWithPixyCommand = new TrackBallWithPixyCommand(Constants.BALL_PROFILE, 5);
     driveBaseCommands.add(trackBallWithPixyCommand);
     shooterCommands.add(trackBallWithPixyCommand);
     setShooterSpeedCommand = new SetShooterSpeedCommand();
@@ -277,10 +283,11 @@ public class RobotContainer {
     shooterCommands.add(shootLowGoalCommand);
     driveToDistanceWithMotionProfileCommand = new DriveToDistanceWithMotionProfileCommand(1, 3);
     driveBaseCommands.add(driveToDistanceWithMotionProfileCommand);
-    turnAngleCommand = new TurnAngleCommand(45, 4);
+    turnAngleCommand = new TurnAngleCommand(180, 4);
     driveBaseCommands.add(turnAngleCommand);
     fullAutonParalellCommandGroup = new FullAutonParalellCommandGroup();
     driveBaseCommands.add(fullAutonParalellCommandGroup);
+    ballSuckCommand = new BallSuckCommand(1000, 0);
     climbingCommand = new ClimbingCommand();
 
     // Test Commands
@@ -300,20 +307,23 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     button1.whenPressed(driveCommand);
-    // button2.whenPressed(teleopBallIntakeCommand);
-    button2.whenPressed(teleopTurnTurretCommand);
-    // button3.whenPressed(shootBallCommand);
-    button3.whenPressed(configureWheelAlignments);
-    button4.whenPressed(setShooterSpeedCommand);
+    button2.whenPressed(teleopBallIntakeCommand);
+    // button2.whenPressed(teleopTurnTurretCommand);
+    button3.toggleWhenPressed(shootBallCommand);
+    // button3.whenPressed(configureWheelAlignments);
+    // button4.whenPressed(setShooterSpeedCommand);
+    // button4.whenPressed(teleopTurnTurretCommand);
     button5.whenPressed(aimTurretTowardsTargetZach);  
     button6.whenPressed(cancelAllDriveBaseCommandsCommand);
     button7.whenPressed(cancelAllShooterCommandsCommand);
-    button8.whenPressed(turnAngleCommand);
-    // button9.whenPressed(shootLowGoalCommand);
-    button9.whenPressed(trackBallWithPixyCommand);
-    button10.whenPressed(fullAutonParalellCommandGroup);
-    
-    
+    button8.whenPressed(teleopTurnTurretCommand);
+    // button8.whenPressed(climbingCommand);
+    // button9.whenPressed(ballSuckCommand);
+    button9.whenPressed(climbingCommand);
+    // button10.whenPressed(climbingCommand);
+    // button10.whenPressed(fullAutonParalellCommandGroup);
+    button10.whenPressed(shootLowGoalCommand);
+  
   }
 
   
@@ -324,7 +334,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new FullAutonParalellCommandGroup();
+    return new Scuff();
     }
 
   /**

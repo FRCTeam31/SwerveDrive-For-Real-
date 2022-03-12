@@ -7,6 +7,7 @@ package frc.robot.commands;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.None;
 
 import PursellJaques.N_PID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -29,18 +30,22 @@ public class TrackBallWithPixyCommand extends CommandBase {
   Double avgY = null;
   Double prevX2 = null;
   Double prevY2 = null;
+  public Timer timer;
+  public double maxTime;
 
 
   /** Creates a new TrackBallWithPixyCommand. 
    * @param signature the signature (profile) you want to track
   */
-  public TrackBallWithPixyCommand(int signature) {
+  public TrackBallWithPixyCommand(int signature, double maxTime) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.signature = signature;
 
     // Set up PID
     anglePID = new N_PID(Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP, Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI, Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD);
     distancePID = new N_PID(Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP, Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI, Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_ANGLE_KD);
+    this.maxTime = maxTime;
+    timer = new Timer();
   }
 
   // Called when the command is initially scheduled.
@@ -58,6 +63,8 @@ public class TrackBallWithPixyCommand extends CommandBase {
     prevX2 = prevX;
     prevY2 = prevY;
     SmartDashboard.putString("Current Command", "Track Ball With Pixy");
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -144,6 +151,9 @@ public class TrackBallWithPixyCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(timer.get() > maxTime){
+      return true;
+    }
     return (validPostionCounter > Constants.TRACK_BALL_WITH_PIXY_COMMAND_MAX_COUNT);
   }
 }

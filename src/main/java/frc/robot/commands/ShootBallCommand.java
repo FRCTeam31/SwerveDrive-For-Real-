@@ -29,6 +29,11 @@ public class ShootBallCommand extends CommandBase {
   @Override
   public void initialize() {
     this.time = 0;
+    double topMotorPower = 1.1*RobotContainer.topMotorTreeMap.getInterpolatedKey(10);
+    double bottomMotorPower = 1.1*RobotContainer.bottomMotorTreeMap.getInterpolatedKey(10);
+    // Set motor speeds
+    RobotContainer.turret.setShooterSpeeds(topMotorPower, bottomMotorPower);
+
     // Turn off driveCommand
   }
 
@@ -45,10 +50,10 @@ public class ShootBallCommand extends CommandBase {
     else{
       // Valid target
       // Calculate powers with tree maps
-      double topMotorPower = 1.1*RobotContainer.topMotorTreeMap.getInterpolatedKey(ty);
-      double bottomMotorPower = 1.1*RobotContainer.bottomMotorTreeMap.getInterpolatedKey(ty);
+      double topMotorPower = RobotContainer.topMotorTreeMap.getInterpolatedKey(ty);
+      double bottomMotorPower = RobotContainer.bottomMotorTreeMap.getInterpolatedKey(ty);
       // Set motor speeds
-      RobotContainer.turret.setShooterSpeeds(topMotorPower, bottomMotorPower);
+      RobotContainer.turret.setShooterSpeeds(topMotorPower * 0.9, bottomMotorPower * 0.9);
       
     }
   }

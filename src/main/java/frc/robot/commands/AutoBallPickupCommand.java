@@ -18,15 +18,15 @@ public class AutoBallPickupCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TrackBallWithPixyCommand(Constants.BALL_PROFILE),
-      new BallSuckCommand(1000, 1000)
+      new TrackBallWithPixyCommand(Constants.BALL_PROFILE, 5),
+      new BallSuckCommand(1500, 1000)
     );
   }
   public AutoBallPickupCommand(double driveTime, double suckTime) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TrackBallWithPixyCommand(Constants.BALL_PROFILE),
+      new TrackBallWithPixyCommand(Constants.BALL_PROFILE, 5),
       new BallSuckCommand(driveTime, suckTime)
     );
   }

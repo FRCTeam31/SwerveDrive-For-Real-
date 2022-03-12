@@ -4,36 +4,23 @@
 
 package frc.robot.commands;
 
-import PursellJaques.AutonOrientation;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousCommandGroupSides extends SequentialCommandGroup {
-  /** Creates a new AutonomousCommandGroup. */
-  private int direction;
-  public AutonomousCommandGroupSides(AutonOrientation orientation) {
+public class NoPixyAutonParallelCommandGroup extends ParallelCommandGroup {
+  /** Creates a new NoPixyAutonParallelCommandGroup. */
+  public NoPixyAutonParallelCommandGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    if (orientation == AutonOrientation.LEFT) {
-      direction = -1;
-    } else if (orientation == AutonOrientation.RIGHT) {
-      direction = 1;
-    } else {
-      System.out.println("stop using this command \nuse the other auton cmd");
-      direction = -1;
-    }
-    
-
     addCommands(
-      new WaitCommand(2),
-      new BallSuckCommand(2000, 2000),
-      new TurnAngleCommand(180, 3),
-      new BallSuckCommand(2000, 0)
+      new AimTurretTowardsTargetZach(),
+      new ShootBallCommand(1),
+      new SequentialCommandGroup(new WaitCommand(2), new BallSuckCommand(3000, 0))
+  
     );
   }
 }

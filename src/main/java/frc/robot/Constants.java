@@ -34,7 +34,7 @@ public final class Constants {
 	
     // Swerve Drive Constants
     public static double SWERVE_DRIVE_ANGLE_SLEW_RATE_LIMTER = 720; // Maximum change in input angle in 1 second 
-    public static double SWERVE_DRIVE_DRIVE_SLEW_RATE_LIMITER = 2; // Maximum change in input magnitude in 1 second
+    public static double SWERVE_DRIVE_DRIVE_SLEW_RATE_LIMITER = 3.5; // Maximum change in input magnitude in 1 second
     public static double SWERVE_DRIVE_METERS_TO_TICKS = 2048.0 / 0.31918581360576; // 2048 ticks / rotation & 4 pi inches / rotation
     public static double SWERVE_WHEEL_TICKS_TO_METERS = 0.31918581360576 / 2048.0;
     public static final double ROBOT_LOOPING_PERIOD = 0.02; // The time it takes for one robot control loop
@@ -76,6 +76,8 @@ public final class Constants {
     public static int FR_AMCID = 13;
     public static int FR_EC = 0;
     public static Vector FR_P = new Vector(1, 1);
+
+    
     // Back Left
     public static int BL_DMCID = 3;
     public static int BL_AMCID = 12;
@@ -128,7 +130,7 @@ public final class Constants {
     public static  double AIM_TURRET_TOWARDS_TARGET_COMMAND_ALPHA = 0.8;
 
     // Climbing Mechanism
-    public static  int CLIMBING_MOTOR_CAN_ID = 0;
+    public static  int CLIMBING_MOTOR_CAN_ID = 10;
 
     // Joystick Constants
     public static int JOYSTICK1_PORT = 1;
@@ -138,8 +140,6 @@ public final class Constants {
     public static int BALL_PROFILE;
     public static int BLUE_BALL_PIXY_PROFILE = Pixy2CCC.CCC_SIG1;
     public static int RED_BALL_PIXY_PROFILE = Pixy2CCC.CCC_SIG2;
-    public static int RED_BALL_PROFILE = 3;
-    public static int BLUE_BALL_PROFILE = 2;
     public static int GOAL_PROFILE = 1;
 
     // Intake Motor Constants
@@ -161,7 +161,7 @@ public final class Constants {
     public static final int DRIVE_DISTANCE_COMMAND_WITH_MOTION_PROFILE_MAX_COUNTER = 10; // Length of loops that robot needs to be inside target distance
 
     // Climbing Command Constants
-    public static  double SAFE_CLIMBING_SPEED = 0.6;
+    public static  double SAFE_CLIMBING_SPEED = 0.5;
 
     // Track ball command constants (OUTDATED COMMAND)
     public static double TRACK_BALL_COMMAND_DISTANCE_P = 0.01;
@@ -194,14 +194,14 @@ public final class Constants {
     public static  double FODWT_F = 0;
 
     // Turn To Angle Command Constants
-    public static double TTA_KP = 1e-2;
+    public static double TTA_KP = 1.5e-3;
     public static double TTA_KI = 0;
     public static double TTA_KD = 0;
     public static double TTA_ERROR = 10; // Degrees of tolerance
-    public static double TTA_MAX_COUNTER = 0; // Number of command loops the robot needs to be inside the tolerance
+    public static double TTA_MAX_COUNTER = 5; // Number of command loops the robot needs to be inside the tolerance
 
     // Autonomous Command Group Constants
-    public static double BALL_SUCK_SPEED = -0.3;
+    public static double BALL_SUCK_SPEED = -0.6;
     public static double SAFE_INTAKE_SPEED = 0.7;
     public static double AUTO_BALL_INTAKE_DRIVE_TIME = 222;
     public static double AUTO_BALL_INTAKE_SUCK_TIME = 666;

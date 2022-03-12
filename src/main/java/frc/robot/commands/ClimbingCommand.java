@@ -28,7 +28,7 @@ public class ClimbingCommand extends CommandBase {
       RobotContainer.climbingMechanism.powerClimbMotor(-1 * Constants.SAFE_CLIMBING_SPEED);
     }
     else{
-      RobotContainer.raiseIntakeMotor.stopMotor();
+      RobotContainer.climbingMechanism.climbingMotor.stopMotor();
     }
   }
 
